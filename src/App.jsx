@@ -30,7 +30,7 @@ export default function App() {
     if (!iaPrompt) return;
     setIsLoading(true);
     
-    const API_KEY = 'AIzaSyCREpXX8xEyEADcbPcdCxOF0CE4OjMkTJI'; 
+     const API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
     const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
 
     try {
