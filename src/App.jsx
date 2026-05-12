@@ -5,6 +5,7 @@ import {
   Sparkles, Loader2, ChevronRight
 } from 'lucide-react';
 import './index.css';
+import miLogo from './logo.png';
 
 export default function App() {
   const whatsappNumber = "584141490509"; 
@@ -68,7 +69,7 @@ export default function App() {
             <div className="flex items-center gap-3 group cursor-pointer">
               {/* AQUÍ VA SU LOGO: Asegúrese de tener logo.png en la carpeta public */}
               <img 
-                src="/logo.jpg" 
+                src={miLogo}
                 alt="EG Events Logo" 
                 className="h-12 w-auto rounded-lg shadow-sm group-hover:scale-105 transition-transform duration-300 object-contain"
                 onError={(e) => {
@@ -294,7 +295,7 @@ export default function App() {
             <div className="flex items-center gap-4">
               {/* Logo en el footer */}
                <img 
-                src="/logo.jpg" 
+                src={miLogo}
                 alt="EG Events Logo" 
                 className="h-10 w-auto grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition-all duration-300"
                 onError={(e) => {
