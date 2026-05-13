@@ -31,14 +31,36 @@ export default function App() {
     const API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
 
     if (!API_KEY || API_KEY === "undefined" || API_KEY === "") {
-      setIaResponse("⚠️ DIAGNÓSTICO VERCEL: La página no encuentra la Clave API. Vercel no la está inyectando.");
+      setIaResponse("⚠️ DIAGNÓSTICO: Vercel no está inyectando la Llave API.");
       setIsLoading(false);
       return;
     }
 
-    const endpoint = `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
-
     try {
+      // 1. AUTO-DESCUBRIMIENTO: El radar busca el nombre exacto del modelo que Google permite hoy
+      const listResponse = await fetch(`https://generativelanguage.googleapis.com/v1beta/models?key=${API_KEY}`);
+      const listData = await listResponse.json();
+      
+      let modeloCorrecto = "models/gemini-pro"; // Nombre de respaldo
+      
+      if (listData.models && listData.models.length > 0) {
+          // Filtramos para agarrar un motor de texto válido que no sea de imágenes
+          const modeloDisponible = listData.models.find(m => 
+              m.supportedGenerationMethods && 
+              m.supportedGenerationMethods.includes("generateContent") &&
+              m.name.includes("gemini") && 
+              !m.name.includes("vision") &&
+              !m.name.includes("embedding")
+          );
+          
+          if (modeloDisponible) {
+              modeloCorrecto = modeloDisponible.name; 
+          }
+      }
+
+      // 2. Conectamos con el nombre exacto que el radar encontró
+      const endpoint = `https://generativelanguage.googleapis.com/v1beta/${modeloCorrecto}:generateContent?key=${API_KEY}`;
+      
       const response = await fetch(endpoint, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -53,19 +75,15 @@ export default function App() {
 
       const data = await response.json();
       
-      if (!response.ok) {
-         setIaResponse(`⚠️ DIAGNÓSTICO GOOGLE: Error ${response.status} - ${data?.error?.message || JSON.stringify(data)}`);
-         setIsLoading(false);
-         return;
-      }
-
       if (data.candidates && data.candidates[0]) {
+        // ¡Éxito! Mostramos el mensaje comercial de la IA
         setIaResponse(data.candidates[0].content.parts[0].text);
       } else {
-        setIaResponse(`⚠️ DIAGNÓSTICO FORMATO: Google respondió pero sin texto. Datos: ${JSON.stringify(data)}`);
+        // Si por casualidad falla la respuesta de Google
+        setIaResponse(`⚠️ DIAGNÓSTICO GOOGLE: ${data?.error?.message || JSON.stringify(data)}`);
       }
     } catch (error) {
-      setIaResponse(`⚠️ DIAGNÓSTICO DE RED: ${error.message} (Posible bloqueo de IP de Venezuela).`);
+      setIaResponse(`⚠️ DIAGNÓSTICO DE RED: ${error.message}`);
     } finally {
       setIsLoading(false);
     }
