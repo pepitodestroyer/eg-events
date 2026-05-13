@@ -189,7 +189,7 @@ export default function App() {
           </div>
           <div className="relative">
             <div className="absolute inset-0 bg-orange-500 rounded-3xl translate-x-4 translate-y-4 opacity-20"></div>
-            <img src="https://images.unsplash.com/photo-1533174000222-edfe81d8bb71?auto=format&fit=crop&q=80" alt="DJ Equipment" className="relative rounded-3xl shadow-2xl object-cover h-[500px] w-full" />
+            <img src="https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&w=800&q=80" alt="Equipos de DJ y Sonido EG Events" className="relative rounded-3xl shadow-2xl object-cover h-[500px] w-full" />"relative rounded-3xl shadow-2xl object-cover h-[500px] w-full" />
           </div>
         </div>
       </section>
