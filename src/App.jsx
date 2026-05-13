@@ -50,7 +50,7 @@ export default function App() {
       if (data.candidates && data.candidates[0]) {
         setIaResponse(data.candidates[0].content.parts[0].text);
       } else {
-        setIaResponse("DIAGNÓSTICO: " + JSON.stringify(data));
+        setIaResponse("¡Suena como un evento increíble! Escríbenos al WhatsApp y lo diseñamos a tu medida.");
 }
     } catch (error) {
       setIaResponse("Hubo un error de conexión, señor. ¡Pero no se preocupe, escríbanos directamente y le asesoramos!");
