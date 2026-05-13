@@ -26,19 +26,41 @@ export default function App() {
   const generarIdeaConIA = async () => {
     if (!iaPrompt) return;
     setIsLoading(true);
-    setIaResponse(''); // Limpiar respuesta anterior
+    setIaResponse(''); 
     
     const API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
 
     if (!API_KEY || API_KEY === "undefined") {
-      setIaResponse("⚠️ VERCEL ERROR: La Clave API no existe. Vercel no está inyectando la variable secreta.");
+      setIaResponse("⚠️ ERROR VERCEL: La Clave API no existe. Asegúrate de inyectarla.");
       setIsLoading(false);
       return;
     }
 
-    const endpoint = `https://generativelanguage.googleapis.com/v1/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
-
     try {
+      // --- SISTEMA DE AUTO-DESCUBRIMIENTO ---
+      // 1. Le preguntamos a Google qué modelos existen y están habilitados para esta clave
+      const listResponse = await fetch(`https://generativelanguage.googleapis.com/v1beta/models?key=${API_KEY}`);
+      const listData = await listResponse.json();
+      
+      let modeloCorrecto = "models/gemini-1.5-flash"; // Valor por defecto
+      
+      if (listData.models && listData.models.length > 0) {
+          // 2. Filtramos la lista para encontrar el primer motor de texto disponible
+          const modeloDisponible = listData.models.find(m => 
+              m.supportedGenerationMethods && 
+              m.supportedGenerationMethods.includes("generateContent") &&
+              m.name.includes("gemini") && 
+              !m.name.includes("vision")
+          );
+          
+          if (modeloDisponible) {
+              modeloCorrecto = modeloDisponible.name; 
+          }
+      }
+
+      // 3. Ejecutamos la IA con el modelo EXACTO que Google nos autorizó
+      const endpoint = `https://generativelanguage.googleapis.com/v1beta/${modeloCorrecto}:generateContent?key=${API_KEY}`;
+      
       const response = await fetch(endpoint, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -53,24 +75,19 @@ export default function App() {
 
       const data = await response.json();
       
-      // Detector infalible de errores HTTP de Google
       if (!response.ok) {
         setIaResponse(`⚠️ GOOGLE RECHAZÓ LA SOLICITUD (Error ${response.status}): ${data?.error?.message || 'Desconocido'}`);
-        setIsLoading(false);
         return;
       }
 
-      // Procesamiento de la respuesta
       if (data.candidates && data.candidates[0] && data.candidates[0].content) {
         setIaResponse(data.candidates[0].content.parts[0].text);
-      } else if (data.candidates && data.candidates[0] && data.candidates[0].finishReason) {
-        setIaResponse(`⚠️ ALERTA: La IA bloqueó tu texto por seguridad de Google (Motivo: ${data.candidates[0].finishReason}). Prueba escribiendo otra cosa.`);
       } else {
-        setIaResponse("⚠️ ERROR EXTRAÑO: Google conectó bien, pero no quiso devolver texto. Avísale al desarrollador.");
+        setIaResponse("⚠️ ERROR: Google conectó, pero el texto devuelto está vacío.");
       }
       
     } catch (error) {
-      setIaResponse(`⚠️ ERROR CRÍTICO DE RED: ${error.message}.`);
+      setIaResponse(`⚠️ ERROR CRÍTICO DE RED: ${error.message}`);
     } finally {
       setIsLoading(false);
     }
