@@ -1,13 +1,12 @@
 import React, { useState, useEffect } from 'react';
 import { 
-  Music, Mic, MonitorPlay, Lightbulb, PartyPopper, HeartHandshake, 
-  GlassWater, Users, CalendarCheck, MessageCircle, Sparkles, 
-  Loader2, ChevronRight, X, Speaker, Projector, ShieldCheck, Award, Zap
+  PartyPopper, HeartHandshake, Zap, GlassWater, Users, 
+  CalendarCheck, MessageCircle, Sparkles, Loader2, 
+  ChevronRight, X, Speaker, Projector, ShieldCheck, Award, Lightbulb
 } from 'lucide-react';
 import './index.css';
 import miLogo from './logo.png';
 
-// --- BASE DE DATOS DE SERVICIOS (CON IMÁGENES PREMIUM) ---
 const serviciosData = [
   {
     id: '15anos',
@@ -58,7 +57,6 @@ export default function App() {
   const [scrolled, setScrolled] = useState(false);
   const [servicioActivo, setServicioActivo] = useState(null);
 
-  // --- GENERADOR INTELIGENTE DE ENLACES DE WHATSAPP ---
   const getWaLink = (contextoEvento = "") => {
     const numero = "584141490509";
     let mensaje = "¡Hola EG Events! Vi su página web y me gustaría solicitar una cotización. A sound for you ;)";
@@ -129,7 +127,6 @@ export default function App() {
   return (
     <div className="min-h-screen bg-neutral-50 text-neutral-800 font-sans scroll-smooth">
       
-      {/* NAVEGACIÓN */}
       <nav className={`fixed w-full z-40 transition-all duration-500 ${scrolled ? 'bg-white/95 backdrop-blur-md shadow-md py-3' : 'bg-transparent py-6'}`}>
         <div className="max-w-7xl mx-auto px-4 flex justify-between items-center">
           <img src={miLogo} alt="EG Events" className="h-14 w-auto rounded-lg shadow-sm transition-transform hover:scale-105" />
@@ -145,7 +142,6 @@ export default function App() {
         </div>
       </nav>
 
-      {/* HERO SECTION */}
       <section className="relative pt-48 pb-40 overflow-hidden bg-neutral-950 text-white text-center">
         <div className="absolute inset-0 z-0">
           <img src="https://images.unsplash.com/photo-1492684223066-81342ee5ff30?auto=format&fit=crop&q=80" alt="Concert Event" className="w-full h-full object-cover opacity-20 mix-blend-overlay" />
@@ -165,7 +161,6 @@ export default function App() {
         </div>
       </section>
 
-      {/* NOSOTROS / TRAYECTORIA (Recuperando el texto y la esencia) */}
       <section id="trayectoria" className="py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
           <div>
@@ -189,12 +184,12 @@ export default function App() {
           </div>
           <div className="relative">
             <div className="absolute inset-0 bg-orange-500 rounded-3xl translate-x-4 translate-y-4 opacity-20"></div>
-            <img src="https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&w=800&q=80" alt="Equipos de DJ y Sonido EG Events" className="relative rounded-3xl shadow-2xl object-cover h-[500px] w-full" />"relative rounded-3xl shadow-2xl object-cover h-[500px] w-full" />
+            {/* AQUÍ ESTÁ LA IMAGEN CORREGIDA DE LOS EQUIPOS DE DJ */}
+            <img src="https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&w=800&q=80" alt="Equipos de DJ y Sonido EG Events" className="relative rounded-3xl shadow-2xl object-cover h-[500px] w-full" />
           </div>
         </div>
       </section>
 
-      {/* SERVICIOS PREMIUM (Tarjetas Fotográficas) */}
       <section id="servicios" className="py-24 bg-neutral-100">
         <div className="max-w-7xl mx-auto px-4">
           <div className="text-center mb-16">
@@ -224,7 +219,6 @@ export default function App() {
         </div>
       </section>
 
-      {/* VENTANA MODAL (POP-UP) PROFESIONAL DIVIDIDA */}
       {servicioActivo && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 md:p-8">
           <div className="absolute inset-0 bg-neutral-950/80 backdrop-blur-sm" onClick={() => setServicioActivo(null)}></div>
@@ -246,7 +240,6 @@ export default function App() {
               <h3 className="text-4xl font-black text-neutral-900 mb-4">{servicioActivo.title}</h3>
               <p className="text-lg text-neutral-600 leading-relaxed mb-8">{servicioActivo.fullDesc}</p>
               
-              {/* BOTÓN WHATSAPP DINÁMICO */}
               <a href={getWaLink(servicioActivo.title)} target="_blank" rel="noopener noreferrer" className="w-full inline-flex justify-center items-center gap-2 px-8 py-4 rounded-full text-white bg-neutral-900 hover:bg-orange-500 font-bold text-lg shadow-lg hover:shadow-orange-500/30 transition-all duration-300 group">
                 <MessageCircle size={22} className="group-hover:animate-bounce" /> Cotizar este montaje
               </a>
@@ -255,7 +248,6 @@ export default function App() {
         </div>
       )}
 
-      {/* EQUIPOS TÉCNICOS */}
       <section id="equipos" className="py-24 bg-neutral-950 text-white">
         <div className="max-w-7xl mx-auto px-4 text-center">
           <h2 className="text-4xl md:text-5xl font-black mb-16 text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-yellow-400">Arsenal Tecnológico</h2>
@@ -279,7 +271,6 @@ export default function App() {
         </div>
       </section>
 
-      {/* IA INTERACTIVA */}
       <section id="ia-ideas" className="py-32 bg-orange-50 relative">
         <div className="max-w-4xl mx-auto px-4 text-center">
           <div className="inline-flex items-center justify-center w-24 h-24 bg-white rounded-full mb-8 shadow-xl">
@@ -310,7 +301,6 @@ export default function App() {
               <div className="p-8 md:p-10 bg-gradient-to-br from-orange-50 to-yellow-50 rounded-3xl text-left border border-orange-200 shadow-inner">
                 <p className="text-neutral-800 text-xl font-medium italic leading-relaxed">"{iaResponse}"</p>
                 <div className="mt-8 pt-6 border-t border-orange-200 flex justify-end">
-                  {/* WHATSAPP DINÁMICO PARA IA */}
                   <a href={getWaLink(`Producción sugerida por la IA para: ${iaPrompt}`)} target="_blank" rel="noopener noreferrer" className="px-8 py-3.5 bg-green-500 hover:bg-green-600 text-white rounded-full font-bold flex items-center gap-2 shadow-md hover:scale-105 transition-transform">
                     <MessageCircle size={20} /> Cotizar esta idea al WhatsApp
                   </a>
@@ -321,7 +311,6 @@ export default function App() {
         </div>
       </section>
 
-      {/* FOOTER */}
       <footer className="bg-neutral-950 py-16 text-center text-neutral-500 border-t border-neutral-800">
         <img src={miLogo} alt="EG Events" className="h-12 w-auto mx-auto grayscale opacity-30 mb-8 hover:grayscale-0 hover:opacity-100 transition-all duration-500" />
         <p>© {new Date().getFullYear()} EG Events. Todos los derechos reservados.</p>
