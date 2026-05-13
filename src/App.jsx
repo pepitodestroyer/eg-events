@@ -30,7 +30,12 @@ export default function App() {
     
     const API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
 
-    // Conexión oficial al motor más rápido y estable
+    if (!API_KEY || API_KEY === "undefined" || API_KEY === "") {
+      setIaResponse("⚠️ DIAGNÓSTICO VERCEL: La página no encuentra la Clave API. Vercel no la está inyectando.");
+      setIsLoading(false);
+      return;
+    }
+
     const endpoint = `https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=${API_KEY}`;
 
     try {
@@ -48,13 +53,19 @@ export default function App() {
 
       const data = await response.json();
       
+      if (!response.ok) {
+         setIaResponse(`⚠️ DIAGNÓSTICO GOOGLE: Error ${response.status} - ${data?.error?.message || JSON.stringify(data)}`);
+         setIsLoading(false);
+         return;
+      }
+
       if (data.candidates && data.candidates[0]) {
         setIaResponse(data.candidates[0].content.parts[0].text);
       } else {
-        setIaResponse("¡Suena como un evento increíble! Escríbenos al WhatsApp y lo diseñamos a tu medida.");
+        setIaResponse(`⚠️ DIAGNÓSTICO FORMATO: Google respondió pero sin texto. Datos: ${JSON.stringify(data)}`);
       }
     } catch (error) {
-      setIaResponse("¡Suena como un evento increíble! Escríbenos al WhatsApp y lo diseñamos a tu medida.");
+      setIaResponse(`⚠️ DIAGNÓSTICO DE RED: ${error.message} (Posible bloqueo de IP de Venezuela).`);
     } finally {
       setIsLoading(false);
     }
@@ -63,7 +74,6 @@ export default function App() {
   return (
     <div className="min-h-screen bg-neutral-50 text-neutral-800 font-sans selection:bg-orange-500 selection:text-white scroll-smooth">
       
-      {/* NAVEGACIÓN */}
       <nav className={`fixed w-full z-50 transition-all duration-500 ${scrolled ? 'bg-white/95 backdrop-blur-md shadow-md py-2' : 'bg-transparent py-6'}`}>
         <div className="max-w-7xl mx-auto px-4 flex justify-between items-center">
           <img src={miLogo} alt="EG Events Logo" className="h-12 w-auto rounded-lg shadow-sm" />
@@ -73,7 +83,6 @@ export default function App() {
         </div>
       </nav>
 
-      {/* HERO SECTION */}
       <section className="relative pt-40 pb-32 overflow-hidden bg-neutral-950 text-white text-center">
         <div className="relative z-10 max-w-7xl mx-auto px-4">
           <h1 className="text-5xl md:text-8xl font-black mb-6 leading-tight">Elevamos el nivel <br/> de tu celebración.</h1>
@@ -81,7 +90,6 @@ export default function App() {
         </div>
       </section>
 
-      {/* IA INTERACTIVA */}
       <section id="ia-ideas" className="py-32 bg-orange-50">
         <div className="max-w-4xl mx-auto px-4 text-center">
           <h2 className="text-4xl font-black mb-6">Inspírate con nuestra IA</h2>
@@ -93,7 +101,7 @@ export default function App() {
                 type="text" 
                 value={iaPrompt}
                 onChange={(e) => setIaPrompt(e.target.value)}
-                placeholder="Ej: Una fiesta de 15 años temática neón..." 
+                placeholder="Ej: Una fiesta temática neón..." 
                 className="flex-1 px-8 py-5 rounded-full bg-neutral-50 border border-neutral-200 focus:outline-none focus:border-orange-500 text-lg"
               />
               <button 
