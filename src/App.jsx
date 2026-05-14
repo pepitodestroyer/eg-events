@@ -97,7 +97,6 @@ export default function App() {
           );
           if (modeloDisponible) modeloCorrecto = modeloDisponible.name; 
       }
-
       const endpoint = `https://generativelanguage.googleapis.com/v1beta/${modeloCorrecto}:generateContent?key=${API_KEY}`;
       const response = await fetch(endpoint, {
         method: 'POST',
@@ -105,7 +104,7 @@ export default function App() {
         body: JSON.stringify({
           contents: [{
             parts: [{
-              text: `Actúa como experto de 'EG Events' (16 años exp). Cliente quiere: "${iaPrompt}". Sugiere brevemente música, estructuras y recalca el uso de sonido JBL. Tono comercial.`
+              text: `Actúa como experto de 'EG Events'. Cliente quiere: "${iaPrompt}". Sugiere brevemente música y recalca sonido JBL.`
             }]
           }]
         })
@@ -127,77 +126,69 @@ export default function App() {
     <div className="min-h-screen bg-neutral-50 text-neutral-800 font-sans scroll-smooth">
       
       {/* NAVEGACIÓN */}
-      <nav className={`fixed w-full z-40 transition-all duration-500 ${scrolled ? 'bg-white/95 backdrop-blur-md shadow-md py-3' : 'bg-transparent py-4 md:py-6'}`}>
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 flex justify-between items-center">
-          <img src={miLogo} alt="EG Events" className="h-10 md:h-14 w-auto rounded-lg shadow-sm" />
+      <nav className={`fixed w-full z-40 transition-all duration-500 ${scrolled ? 'bg-white/95 backdrop-blur-md shadow-md py-3' : 'bg-transparent py-4'}`}>
+        <div className="max-w-7xl mx-auto px-4 flex justify-between items-center">
+          <img src={miLogo} alt="EG Events" className="h-10 md:h-14 w-auto" />
           <div className={`hidden md:flex space-x-8 font-bold text-sm tracking-wide ${scrolled ? 'text-neutral-800' : 'text-white'}`}>
-            <a href="#trayectoria" className="hover:text-orange-500 transition-colors">Nosotros</a>
-            <a href="#servicios" className="hover:text-orange-500 transition-colors">Servicios</a>
-            <a href="#equipos" className="hover:text-orange-500 transition-colors">Equipos</a>
-            <a href="#ia-ideas" className="hover:text-orange-500 transition-colors">Asistente IA</a>
+            <a href="#trayectoria" className="hover:text-orange-500">Nosotros</a>
+            <a href="#servicios" className="hover:text-orange-500">Servicios</a>
+            <a href="#equipos" className="hover:text-orange-500">Equipos</a>
+            <a href="#ia-ideas" className="hover:text-orange-500">Asistente IA</a>
           </div>
-          <a href={getWaLink()} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-5 py-2 md:px-6 md:py-2.5 rounded-full text-white bg-gradient-to-r from-orange-500 to-yellow-500 font-bold shadow-lg transition-all text-sm md:text-base">
+          <a href={getWaLink()} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-5 py-2 rounded-full text-white bg-gradient-to-r from-orange-500 to-yellow-500 font-bold shadow-lg text-sm">
             <MessageCircle size={18} /> Contactar
           </a>
         </div>
       </nav>
 
-      {/* HERO SECTION */}
+      {/* HERO SECTION - RESTAURADA CON LUCES ANIMADAS */}
       <section className="relative pt-36 pb-24 md:pt-48 md:pb-40 overflow-hidden bg-neutral-950 text-white text-center">
         <div className="absolute inset-0 z-0">
-          <img src="https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&w=800&q=80" alt="Concert Event" className="w-full h-full object-cover opacity-20" />
-          <div className="absolute inset-0 bg-gradient-to-b from-neutral-950/80 via-neutral-950/90 to-neutral-950"></div>
+          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-neutral-800 via-neutral-950 to-neutral-950"></div>
+          <div className="absolute top-0 left-1/4 w-[300px] h-[300px] md:w-[500px] md:h-[500px] bg-orange-600/20 rounded-full blur-[100px] md:blur-[120px] animate-pulse"></div>
+          <div className="absolute bottom-0 right-1/4 w-[400px] h-[400px] md:w-[600px] md:h-[600px] bg-yellow-600/10 rounded-full blur-[120px] md:blur-[150px] animate-pulse" style={{ animationDelay: '2s' }}></div>
         </div>
         <div className="relative z-10 max-w-7xl mx-auto px-4">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 border border-white/20 text-orange-400 font-semibold text-xs md:text-sm mb-6 md:mb-8 backdrop-blur-md">
-            <Award size={16} /> 16 Años de Excelencia con JBL
+            <Award size={16} /> 16 Años de Excelencia con JBL Professional
           </div>
           <h1 className="text-4xl sm:text-5xl md:text-8xl font-black mb-4 md:mb-6 leading-tight tracking-tighter">Elevamos el nivel <br className="hidden md:block"/> de tu celebración.</h1>
           <p className="mt-4 md:mt-6 text-xl sm:text-2xl md:text-3xl text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-yellow-300 font-light italic">"A sound for you ;)"</p>
         </div>
       </section>
 
-      {/* NOSOTROS */}
+      {/* RESTO DE LA PÁGINA (NOSOTROS, SERVICIOS, EQUIPOS, IA) */}
       <section id="trayectoria" className="py-16 md:py-24 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 grid grid-cols-1 lg:grid-cols-2 gap-10 md:gap-16 items-center">
+        <div className="max-w-7xl mx-auto px-4 grid grid-cols-1 lg:grid-cols-2 gap-10 md:gap-16 items-center">
           <div>
             <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-neutral-900 mb-4 md:mb-6 leading-tight">No solo ponemos música, <br className="hidden sm:block"/> <span className="text-orange-500">creamos memorias.</span></h2>
-            <p className="text-base md:text-lg text-neutral-600 leading-relaxed mb-6">
-              En <strong>EG Events</strong> somos especialistas en llevar la potencia de <strong>JBL Professional</strong> a tu evento. Con 16 años de trayectoria perfeccionando montajes, garantizamos una experiencia sonora de alto impacto y una iluminación de vanguardia.
-            </p>
+            <p className="text-base md:text-lg text-neutral-600 leading-relaxed mb-6">En <strong>EG Events</strong> somos especialistas en llevar la potencia de <strong>JBL Professional</strong> a tu evento. Con 16 años de trayectoria perfeccionando montajes, garantizamos una experiencia sonora de alto impacto y una iluminación de vanguardia.</p>
             <div className="grid grid-cols-2 gap-4 md:gap-6 mt-6 md:mt-8">
-              <div className="flex items-center gap-2 md:gap-3">
-                <ShieldCheck className="text-orange-500 w-6 h-6 md:w-8 md:h-8" />
-                <span className="font-bold text-neutral-800 text-sm md:text-base">Calidad JBL</span>
-              </div>
-              <div className="flex items-center gap-2 md:gap-3">
-                <Sparkles className="text-orange-500 w-6 h-6 md:w-8 md:h-8" />
-                <span className="font-bold text-neutral-800 text-sm md:text-base">Diseño Elite</span>
-              </div>
+              <div className="flex items-center gap-2 md:gap-3"><ShieldCheck className="text-orange-500" /><span className="font-bold text-neutral-800 text-sm md:text-base">Calidad JBL</span></div>
+              <div className="flex items-center gap-2 md:gap-3"><Sparkles className="text-orange-500" /><span className="font-bold text-neutral-800 text-sm md:text-base">Diseño Elite</span></div>
             </div>
           </div>
           <div className="relative mt-8 md:mt-0">
-            <div className="absolute inset-0 bg-orange-500 rounded-3xl translate-x-3 translate-y-3 md:translate-x-4 md:translate-y-4 opacity-20"></div>
-            <img src="https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&w=800&q=80" alt="Equipos EG Events" className="relative rounded-3xl shadow-2xl object-cover h-64 sm:h-80 md:h-[500px] w-full" />
+            <div className="absolute inset-0 bg-orange-500 rounded-3xl translate-x-3 translate-y-3 opacity-20"></div>
+            <img src="https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&w=800&q=80" alt="Equipos EG Events" className="relative rounded-3xl shadow-2xl object-cover h-64 md:h-[500px] w-full" />
           </div>
         </div>
       </section>
 
-      {/* SERVICIOS */}
       <section id="servicios" className="py-16 md:py-24 bg-neutral-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6">
           <div className="text-center mb-10 md:mb-16">
-            <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-neutral-900 mb-3 md:mb-4">Experiencias a tu Medida</h2>
-            <p className="text-lg md:text-xl text-neutral-600 px-4">Producción de alto nivel para eventos inolvidables.</p>
+            <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-neutral-900 mb-4">Experiencias a tu Medida</h2>
+            <p className="text-lg md:text-xl text-neutral-600">Producción de alto nivel con tecnología JBL.</p>
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
             {serviciosData.map((servicio) => (
-              <div key={servicio.id} onClick={() => setServicioActivo(servicio)} className="group relative rounded-3xl md:rounded-[2rem] overflow-hidden shadow-lg h-72 sm:h-80 md:h-[400px] cursor-pointer">
+              <div key={servicio.id} onClick={() => setServicioActivo(servicio)} className="group relative rounded-3xl overflow-hidden shadow-lg h-72 md:h-[400px] cursor-pointer">
                 <img src={servicio.image} alt={servicio.title} className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
-                <div className="absolute inset-0 bg-gradient-to-t from-neutral-950 via-neutral-950/50 to-transparent"></div>
-                <div className="absolute bottom-0 left-0 w-full p-6 md:p-8 md:translate-y-4 group-hover:translate-y-0 transition-transform">
-                  <div className="text-orange-400 mb-3 md:mb-4">{servicio.icon}</div>
-                  <h3 className="text-xl md:text-2xl font-bold text-white mb-1 md:mb-2">{servicio.title}</h3>
+                <div className="absolute inset-0 bg-gradient-to-t from-neutral-950 via-neutral-950/40 to-transparent"></div>
+                <div className="absolute bottom-0 left-0 w-full p-6 md:p-8">
+                  <div className="text-orange-400 mb-3">{servicio.icon}</div>
+                  <h3 className="text-xl md:text-2xl font-bold text-white mb-2">{servicio.title}</h3>
                   <span className="inline-flex items-center text-xs md:text-sm font-bold text-orange-400">Ver detalles <ChevronRight size={16} /></span>
                 </div>
               </div>
@@ -206,81 +197,66 @@ export default function App() {
         </div>
       </section>
 
-      {/* VENTANA MODAL SERVICIOS - BLINDADA PARA MÓVILES */}
       {servicioActivo && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6">
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
           <div className="absolute inset-0 bg-neutral-950/80 backdrop-blur-sm" onClick={() => setServicioActivo(null)}></div>
-          
-          <div className="relative bg-white rounded-3xl md:rounded-[2rem] w-full max-w-5xl shadow-2xl overflow-hidden flex flex-col md:flex-row max-h-[90vh]">
-            
-            <button onClick={() => setServicioActivo(null)} className="absolute top-3 right-3 md:top-4 md:right-4 z-20 p-2 rounded-full bg-black/50 text-white hover:bg-black transition-colors backdrop-blur-md">
-              <X size={20} />
-            </button>
-            
-            {/* IMAGEN INAPLASTABLE (shrink-0 y absolute inset) */}
-            <div className="w-full h-48 sm:h-64 md:w-1/2 md:h-auto shrink-0 relative">
+          <div className="relative bg-white rounded-3xl w-full max-w-5xl shadow-2xl overflow-hidden flex flex-col md:flex-row max-h-[90vh]">
+            <button onClick={() => setServicioActivo(null)} className="absolute top-3 right-3 z-20 p-2 rounded-full bg-black/50 text-white hover:bg-black"><X size={20} /></button>
+            <div className="w-full h-48 md:h-auto md:w-1/2 shrink-0 relative">
               <img src={servicioActivo.image} alt={servicioActivo.title} className="absolute inset-0 w-full h-full object-cover" />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent md:hidden"></div>
             </div>
-            
-            {/* CONTENIDO TEXTUAL */}
-            <div className="w-full md:w-1/2 p-6 sm:p-8 md:p-12 overflow-y-auto flex-1 bg-white">
-              <div className="inline-flex p-3 md:p-4 rounded-xl md:rounded-2xl bg-orange-100 text-orange-600 mb-4 md:mb-6 w-max relative z-10 -mt-12 md:mt-0 shadow-lg md:shadow-none">
-                {servicioActivo.icon}
-              </div>
-              <h3 className="text-2xl sm:text-3xl md:text-4xl font-black text-neutral-900 mb-3 md:mb-4">{servicioActivo.title}</h3>
-              <p className="text-base md:text-lg text-neutral-600 leading-relaxed mb-6 md:mb-8">{servicioActivo.fullDesc}</p>
-              <a href={getWaLink(servicioActivo.title)} target="_blank" rel="noopener noreferrer" className="w-full inline-flex justify-center items-center gap-2 px-6 py-4 rounded-full text-white bg-neutral-900 hover:bg-orange-500 font-bold text-sm md:text-lg shadow-lg transition-all">
+            <div className="w-full md:w-1/2 p-6 md:p-12 overflow-y-auto bg-white flex flex-col justify-center">
+              <div className="inline-flex p-3 rounded-xl bg-orange-100 text-orange-600 mb-4 w-max">{servicioActivo.icon}</div>
+              <h3 className="text-2xl md:text-4xl font-black text-neutral-900 mb-3">{servicioActivo.title}</h3>
+              <p className="text-base md:text-lg text-neutral-600 leading-relaxed mb-6">{servicioActivo.fullDesc}</p>
+              <a href={getWaLink(servicioActivo.title)} target="_blank" rel="noopener noreferrer" className="w-full inline-flex justify-center items-center gap-2 px-6 py-4 rounded-full text-white bg-neutral-900 hover:bg-orange-500 font-bold shadow-lg transition-all">
                 <MessageCircle size={20} /> Cotizar vía WhatsApp
               </a>
             </div>
-
           </div>
         </div>
       )}
 
-      {/* EQUIPOS TÉCNICOS */}
       <section id="equipos" className="py-16 md:py-24 bg-neutral-950 text-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 text-center">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-black mb-10 md:mb-16 text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-yellow-400">Arsenal Tecnológico</h2>
+        <div className="max-w-7xl mx-auto px-4 text-center">
+          <h2 className="text-3xl md:text-5xl font-black mb-10 text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-yellow-400">Arsenal Tecnológico</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
-            <div className="p-8 md:p-10 rounded-3xl md:rounded-[2rem] bg-neutral-900 border border-neutral-800 text-left">
-              <Speaker className="text-orange-400 mb-5 md:mb-6 w-10 h-10 md:w-12 md:h-12" />
-              <h3 className="text-xl md:text-2xl font-bold mb-3 md:mb-4">Sonido JBL Professional</h3>
-              <p className="text-sm md:text-base text-neutral-400 leading-relaxed">Sistemas Line Array y bajos de alta potencia JBL para una acústica perfecta, nítida y envolvente.</p>
+            <div className="p-8 md:p-10 rounded-3xl bg-neutral-900 border border-neutral-800 text-left">
+              <Speaker className="text-orange-400 mb-5" size={40} />
+              <h3 className="text-xl md:text-2xl font-bold mb-3">Sonido JBL Professional</h3>
+              <p className="text-sm md:text-base text-neutral-400 leading-relaxed">Sistemas Line Array y bajos de alta potencia JBL para una acústica perfecta y nítida.</p>
             </div>
-            <div className="p-8 md:p-10 rounded-3xl md:rounded-[2rem] bg-neutral-900 border border-neutral-800 text-left">
-              <Lightbulb className="text-orange-400 mb-5 md:mb-6 w-10 h-10 md:w-12 md:h-12" />
-              <h3 className="text-xl md:text-2xl font-bold mb-3 md:mb-4">Iluminación Inteligente</h3>
-              <p className="text-sm md:text-base text-neutral-400 leading-relaxed">Cabezas móviles robóticas y efectos láser para crear ambientes inmersivos sincronizados con la música.</p>
+            <div className="p-8 md:p-10 rounded-3xl bg-neutral-900 border border-neutral-800 text-left">
+              <Lightbulb className="text-orange-400 mb-5" size={40} />
+              <h3 className="text-xl md:text-2xl font-bold mb-3">Iluminación Inteligente</h3>
+              <p className="text-sm md:text-base text-neutral-400 leading-relaxed">Cabezas móviles robóticas y efectos láser sincronizados con la música.</p>
             </div>
-            <div className="p-8 md:p-10 rounded-3xl md:rounded-[2rem] bg-neutral-900 border border-neutral-800 text-left">
-              <Projector className="text-orange-400 mb-5 md:mb-6 w-10 h-10 md:w-12 md:h-12" />
-              <h3 className="text-xl md:text-2xl font-bold mb-3 md:mb-4">Pantallas LED</h3>
-              <p className="text-sm md:text-base text-neutral-400 leading-relaxed">Pantallas gigantes de alta resolución para proyección de visuales, videos y transmisiones en vivo.</p>
+            <div className="p-8 md:p-10 rounded-3xl bg-neutral-900 border border-neutral-800 text-left">
+              <Projector className="text-orange-400 mb-5" size={40} />
+              <h3 className="text-xl md:text-2xl font-bold mb-3">Visuales y Pantallas</h3>
+              <p className="text-sm md:text-base text-neutral-400 leading-relaxed">Pantallas gigantes de alta resolución para una experiencia visual de impacto.</p>
             </div>
           </div>
         </div>
       </section>
 
-      {/* IA INTERACTIVA */}
-      <section id="ia-ideas" className="py-20 md:py-32 bg-orange-50">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 text-center">
-          <h2 className="text-3xl sm:text-4xl md:text-5xl font-black text-neutral-900 mb-4 md:mb-6">Asistente Creativo IA</h2>
-          <p className="text-base md:text-xl text-neutral-600 mb-8 md:mb-12">Diseña tu evento ideal con nuestra Inteligencia Artificial.</p>
-          <div className="bg-white p-6 md:p-12 rounded-3xl md:rounded-[3rem] shadow-2xl border border-orange-100">
-            <div className="flex flex-col sm:flex-row gap-3 md:gap-4 mb-2">
-              <input type="text" value={iaPrompt} onChange={(e) => setIaPrompt(e.target.value)} placeholder="Ej: Mi graduación con sonido JBL..." className="flex-1 px-6 md:px-8 py-4 md:py-5 rounded-full bg-neutral-50 border focus:border-orange-500 text-base md:text-lg outline-none" />
-              <button onClick={generarIdeaConIA} disabled={isLoading || !iaPrompt} className="px-8 md:px-10 py-4 md:py-5 bg-neutral-900 text-white font-bold rounded-full hover:bg-orange-500 transition-all">
-                {isLoading ? <Loader2 className="animate-spin mx-auto" size={24} /> : "Generar Idea"}
+      <section id="ia-ideas" className="py-20 bg-orange-50 text-center">
+        <div className="max-w-4xl mx-auto px-4">
+          <h2 className="text-3xl md:text-5xl font-black text-neutral-900 mb-4">Asistente Creativo IA</h2>
+          <p className="text-base md:text-xl text-neutral-600 mb-8">Diseña tu evento ideal con nuestra Inteligencia Artificial.</p>
+          <div className="bg-white p-6 md:p-12 rounded-3xl shadow-2xl border border-orange-100">
+            <div className="flex flex-col sm:flex-row gap-3">
+              <input type="text" value={iaPrompt} onChange={(e) => setIaPrompt(e.target.value)} placeholder="Ej: Mi graduación con sonido JBL..." className="flex-1 px-6 py-4 rounded-full bg-neutral-50 border outline-none focus:border-orange-500" />
+              <button onClick={generarIdeaConIA} disabled={isLoading || !iaPrompt} className="px-8 py-4 bg-neutral-900 text-white font-bold rounded-full hover:bg-orange-500 transition-all">
+                {isLoading ? <Loader2 className="animate-spin mx-auto" /> : "Generar Idea"}
               </button>
             </div>
             {iaResponse && (
-              <div className="mt-6 md:mt-8 p-6 md:p-8 bg-gradient-to-br from-orange-50 to-yellow-50 rounded-2xl md:rounded-3xl text-left border border-orange-200">
-                <p className="text-neutral-800 text-base md:text-xl font-medium italic">"{iaResponse}"</p>
-                <div className="mt-6 md:mt-8 flex justify-end">
-                  <a href={getWaLink(`Idea IA: ${iaPrompt}`)} target="_blank" rel="noopener noreferrer" className="px-6 py-3 md:px-8 md:py-3.5 bg-green-500 text-white rounded-full font-bold flex items-center gap-2 shadow-md text-sm md:text-base">
-                    <MessageCircle size={20} /> Cotizar esta idea
+              <div className="mt-6 p-6 bg-orange-50 rounded-2xl text-left border border-orange-200">
+                <p className="text-neutral-800 italic">"{iaResponse}"</p>
+                <div className="mt-4 flex justify-end">
+                  <a href={getWaLink(`Idea IA: ${iaPrompt}`)} target="_blank" rel="noopener noreferrer" className="px-6 py-2 bg-green-500 text-white rounded-full font-bold flex items-center gap-2 shadow-md">
+                    <MessageCircle size={18} /> Cotizar idea
                   </a>
                 </div>
               </div>
@@ -289,10 +265,9 @@ export default function App() {
         </div>
       </section>
 
-      {/* FOOTER */}
-      <footer className="bg-neutral-950 py-10 md:py-16 text-center text-neutral-500 border-t border-neutral-800">
-        <img src={miLogo} alt="EG Events" className="h-8 md:h-12 w-auto mx-auto grayscale opacity-30 mb-6 md:mb-8" />
-        <p className="text-sm md:text-base">© {new Date().getFullYear()} EG Events. Potenciado por JBL.</p>
+      <footer className="bg-neutral-950 py-10 text-center text-neutral-500 border-t border-neutral-800">
+        <img src={miLogo} alt="EG Events" className="h-8 mx-auto grayscale opacity-30 mb-6" />
+        <p className="text-sm">© {new Date().getFullYear()} EG Events. Potenciado por JBL Professional.</p>
       </footer>
     </div>
   );
