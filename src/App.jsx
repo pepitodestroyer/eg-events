@@ -11,7 +11,7 @@ const serviciosData = [
   {
     id: '15anos',
     title: 'Fiestas de 15 Años',
-    icon: <PartyPopper size={28} className="md:w-8 md:h-8" />,
+    icon: <PartyPopper size={28} />,
     image: 'https://images.unsplash.com/photo-1566737236500-c8ac43014a67?auto=format&fit=crop&q=80',
     shortDesc: 'La noche mágica que siempre soñó.',
     fullDesc: 'Diseñamos una atmósfera de fantasía. Desde iluminación robótica que sigue a la quinceañera, hasta pantallas LED. Todo respaldado por la potencia y claridad de nuestros sistemas de sonido JBL.',
@@ -19,7 +19,7 @@ const serviciosData = [
   {
     id: 'bodas',
     title: 'Bodas de Ensueño',
-    icon: <HeartHandshake size={28} className="md:w-8 md:h-8" />,
+    icon: <HeartHandshake size={28} />,
     image: 'https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&q=80',
     shortDesc: 'El soundtrack perfecto para tu "Sí, acepto".',
     fullDesc: 'Musicalización elegante para la ceremonia y fiesta explosiva para la hora loca. Utilizamos tecnología JBL para garantizar que cada palabra de los votos y cada nota del vals se escuchen con una fidelidad asombrosa.',
@@ -27,15 +27,15 @@ const serviciosData = [
   {
     id: 'graduaciones',
     title: 'Graduaciones',
-    icon: <School size={28} className="md:w-8 md:h-8" />,
-    image: 'https://images.unsplash.com/photo-1523050853023-8c2d27443ef8?auto=format&fit=crop&w=800&q=80',
+    icon: <School size={28} />,
+    image: 'https://images.pexels.com/photos/267885/pexels-photo-267885.jpeg?auto=compress&cs=tinysrgb&w=800',
     shortDesc: 'El cierre de un ciclo, el inicio de una leyenda.',
     fullDesc: 'Producimos actos académicos y fiestas de promoción con un estándar de excelencia. Desde el audio nítido para los discursos hasta la máxima potencia JBL para el baile final. Estructuras imponentes para una despedida inolvidable.',
   },
   {
     id: 'divorcios',
     title: 'Fiestas de Divorcio',
-    icon: <Zap size={28} className="md:w-8 md:h-8" />,
+    icon: <Zap size={28} />,
     image: 'https://images.unsplash.com/photo-1566417713940-fe7c737a9ef2?auto=format&fit=crop&q=80',
     shortDesc: '¡Celebra tu nueva libertad por todo lo alto!',
     fullDesc: 'Un cierre de ciclo épico merece una fiesta legendaria. Luces de neón, láseres dinámicos y el sonido más vibrante de nuestras cabinas JBL para festejar tu nueva etapa junto a tus mejores amigos.',
@@ -43,7 +43,7 @@ const serviciosData = [
   {
     id: 'bautizos',
     title: 'Bautizos y Comuniones',
-    icon: <GlassWater size={28} className="md:w-8 md:h-8" />,
+    icon: <GlassWater size={28} />,
     image: 'https://images.unsplash.com/photo-1438232992991-995b7058bbb3?auto=format&fit=crop&q=80',
     shortDesc: 'Celebraciones íntimas, familiares y elegantes.',
     fullDesc: 'Ambiente musical sutil y sofisticado. Microfonía nítida para los brindis familiares, apoyados con sonido profesional JBL de alta fidelidad y una iluminación cálida que realza la paz de la ceremonia.',
@@ -51,7 +51,7 @@ const serviciosData = [
   {
     id: 'corporativos',
     title: 'Eventos Corporativos',
-    icon: <Users size={28} className="md:w-8 md:h-8" />,
+    icon: <Users size={28} />,
     image: 'https://images.unsplash.com/photo-1505373877841-8d25f7d46678?auto=format&fit=crop&q=80',
     shortDesc: 'Proyecta el éxito de tu marca o empresa.',
     fullDesc: 'Soluciones audiovisuales de alto calibre para conferencias y lanzamientos. Sonido uniforme JBL que garantiza que tu mensaje corporativo llegue con total claridad a cada rincón del auditorio.',
@@ -86,11 +86,6 @@ export default function App() {
     setIaResponse('');
     const API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
 
-    if (!API_KEY || API_KEY === "undefined" || API_KEY === "") {
-      setIaResponse("⚠️ Error interno: Clave de IA no detectada.");
-      setIsLoading(false); return;
-    }
-
     try {
       const listResponse = await fetch(`https://generativelanguage.googleapis.com/v1beta/models?key=${API_KEY}`);
       const listData = await listResponse.json();
@@ -98,7 +93,7 @@ export default function App() {
       if (listData.models && listData.models.length > 0) {
           const modeloDisponible = listData.models.find(m => 
               m.supportedGenerationMethods && m.supportedGenerationMethods.includes("generateContent") &&
-              m.name.includes("gemini") && !m.name.includes("vision") && !m.name.includes("embedding")
+              m.name.includes("gemini") && !m.name.includes("vision")
           );
           if (modeloDisponible) modeloCorrecto = modeloDisponible.name; 
       }
@@ -155,14 +150,14 @@ export default function App() {
         </div>
         <div className="relative z-10 max-w-7xl mx-auto px-4">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 border border-white/20 text-orange-400 font-semibold text-xs md:text-sm mb-6 md:mb-8 backdrop-blur-md">
-            <Award size={16} className="md:w-4 md:h-4" /> 16 Años de Excelencia con JBL
+            <Award size={16} /> 16 Años de Excelencia con JBL
           </div>
           <h1 className="text-4xl sm:text-5xl md:text-8xl font-black mb-4 md:mb-6 leading-tight tracking-tighter">Elevamos el nivel <br className="hidden md:block"/> de tu celebración.</h1>
           <p className="mt-4 md:mt-6 text-xl sm:text-2xl md:text-3xl text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-yellow-300 font-light italic">"A sound for you ;)"</p>
         </div>
       </section>
 
-      {/* NOSOTROS (TRAYECTORIA) */}
+      {/* NOSOTROS */}
       <section id="trayectoria" className="py-16 md:py-24 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 grid grid-cols-1 lg:grid-cols-2 gap-10 md:gap-16 items-center">
           <div>
@@ -203,7 +198,7 @@ export default function App() {
                 <div className="absolute bottom-0 left-0 w-full p-6 md:p-8 md:translate-y-4 group-hover:translate-y-0 transition-transform">
                   <div className="text-orange-400 mb-3 md:mb-4">{servicio.icon}</div>
                   <h3 className="text-xl md:text-2xl font-bold text-white mb-1 md:mb-2">{servicio.title}</h3>
-                  <span className="inline-flex items-center text-xs md:text-sm font-bold text-orange-400">Ver detalles <ChevronRight size={16} className="ml-1 group-hover:translate-x-1 transition-transform"/></span>
+                  <span className="inline-flex items-center text-xs md:text-sm font-bold text-orange-400">Ver detalles <ChevronRight size={16} /></span>
                 </div>
               </div>
             ))}
@@ -211,31 +206,35 @@ export default function App() {
         </div>
       </section>
 
-      {/* VENTANA MODAL SERVICIOS (OPTIMIZADA PARA MÓVIL) */}
+      {/* VENTANA MODAL SERVICIOS - BLINDADA PARA MÓVILES */}
       {servicioActivo && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 sm:p-6">
           <div className="absolute inset-0 bg-neutral-950/80 backdrop-blur-sm" onClick={() => setServicioActivo(null)}></div>
+          
           <div className="relative bg-white rounded-3xl md:rounded-[2rem] w-full max-w-5xl shadow-2xl overflow-hidden flex flex-col md:flex-row max-h-[90vh]">
-            <button onClick={() => setServicioActivo(null)} className="absolute top-3 right-3 md:top-4 md:right-4 z-10 p-2 rounded-full bg-black/50 text-white hover:bg-black transition-colors backdrop-blur-md">
-              <X size={20} className="md:w-6 md:h-6" />
+            
+            <button onClick={() => setServicioActivo(null)} className="absolute top-3 right-3 md:top-4 md:right-4 z-20 p-2 rounded-full bg-black/50 text-white hover:bg-black transition-colors backdrop-blur-md">
+              <X size={20} />
             </button>
             
-            {/* EL TRUCO: flex-none evita que la imagen se aplaste en teléfonos */}
-            <div className="w-full md:w-1/2 h-48 sm:h-64 md:h-auto flex-none relative">
-              <img src={servicioActivo.image} alt={servicioActivo.title} className="w-full h-full object-cover" />
+            {/* IMAGEN INAPLASTABLE (shrink-0 y absolute inset) */}
+            <div className="w-full h-48 sm:h-64 md:w-1/2 md:h-auto shrink-0 relative">
+              <img src={servicioActivo.image} alt={servicioActivo.title} className="absolute inset-0 w-full h-full object-cover" />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/50 to-transparent md:hidden"></div>
             </div>
             
-            {/* EL TRUCO: Menos padding (p-6) en teléfonos para que el texto no se asfixie */}
-            <div className="w-full md:w-1/2 p-6 sm:p-8 md:p-12 overflow-y-auto">
-              <div className="inline-flex p-3 md:p-4 rounded-xl md:rounded-2xl bg-orange-100 text-orange-600 mb-4 md:mb-6 w-max">
+            {/* CONTENIDO TEXTUAL */}
+            <div className="w-full md:w-1/2 p-6 sm:p-8 md:p-12 overflow-y-auto flex-1 bg-white">
+              <div className="inline-flex p-3 md:p-4 rounded-xl md:rounded-2xl bg-orange-100 text-orange-600 mb-4 md:mb-6 w-max relative z-10 -mt-12 md:mt-0 shadow-lg md:shadow-none">
                 {servicioActivo.icon}
               </div>
               <h3 className="text-2xl sm:text-3xl md:text-4xl font-black text-neutral-900 mb-3 md:mb-4">{servicioActivo.title}</h3>
               <p className="text-base md:text-lg text-neutral-600 leading-relaxed mb-6 md:mb-8">{servicioActivo.fullDesc}</p>
-              <a href={getWaLink(servicioActivo.title)} target="_blank" rel="noopener noreferrer" className="w-full inline-flex justify-center items-center gap-2 px-6 py-3 md:px-8 md:py-4 rounded-full text-white bg-neutral-900 hover:bg-orange-500 font-bold text-sm md:text-lg shadow-lg transition-all">
-                <MessageCircle size={20} className="md:w-6 md:h-6" /> Cotizar vía WhatsApp
+              <a href={getWaLink(servicioActivo.title)} target="_blank" rel="noopener noreferrer" className="w-full inline-flex justify-center items-center gap-2 px-6 py-4 rounded-full text-white bg-neutral-900 hover:bg-orange-500 font-bold text-sm md:text-lg shadow-lg transition-all">
+                <MessageCircle size={20} /> Cotizar vía WhatsApp
               </a>
             </div>
+
           </div>
         </div>
       )}
@@ -245,20 +244,20 @@ export default function App() {
         <div className="max-w-7xl mx-auto px-4 sm:px-6 text-center">
           <h2 className="text-3xl sm:text-4xl md:text-5xl font-black mb-10 md:mb-16 text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-yellow-400">Arsenal Tecnológico</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
-            <div className="p-8 md:p-10 rounded-3xl md:rounded-[2rem] bg-neutral-900 border border-neutral-800 text-left group">
-              <Speaker className="text-orange-400 mb-5 md:mb-6 group-hover:scale-110 transition-transform w-10 h-10 md:w-12 md:h-12" />
+            <div className="p-8 md:p-10 rounded-3xl md:rounded-[2rem] bg-neutral-900 border border-neutral-800 text-left">
+              <Speaker className="text-orange-400 mb-5 md:mb-6 w-10 h-10 md:w-12 md:h-12" />
               <h3 className="text-xl md:text-2xl font-bold mb-3 md:mb-4">Sonido JBL Professional</h3>
-              <p className="text-sm md:text-base text-neutral-400 leading-relaxed">Sistemas Line Array y bajos de alta potencia JBL para una acústica perfecta, nítida y envolvente en cualquier espacio.</p>
+              <p className="text-sm md:text-base text-neutral-400 leading-relaxed">Sistemas Line Array y bajos de alta potencia JBL para una acústica perfecta, nítida y envolvente.</p>
             </div>
-            <div className="p-8 md:p-10 rounded-3xl md:rounded-[2rem] bg-neutral-900 border border-neutral-800 text-left group">
-              <Lightbulb className="text-orange-400 mb-5 md:mb-6 group-hover:scale-110 transition-transform w-10 h-10 md:w-12 md:h-12" />
+            <div className="p-8 md:p-10 rounded-3xl md:rounded-[2rem] bg-neutral-900 border border-neutral-800 text-left">
+              <Lightbulb className="text-orange-400 mb-5 md:mb-6 w-10 h-10 md:w-12 md:h-12" />
               <h3 className="text-xl md:text-2xl font-bold mb-3 md:mb-4">Iluminación Inteligente</h3>
-              <p className="text-sm md:text-base text-neutral-400 leading-relaxed">Cabezas móviles robóticas, luz negra UV y efectos láser para crear ambientes inmersivos sincronizados con la música.</p>
+              <p className="text-sm md:text-base text-neutral-400 leading-relaxed">Cabezas móviles robóticas y efectos láser para crear ambientes inmersivos sincronizados con la música.</p>
             </div>
-            <div className="p-8 md:p-10 rounded-3xl md:rounded-[2rem] bg-neutral-900 border border-neutral-800 text-left group">
-              <Projector className="text-orange-400 mb-5 md:mb-6 group-hover:scale-110 transition-transform w-10 h-10 md:w-12 md:h-12" />
+            <div className="p-8 md:p-10 rounded-3xl md:rounded-[2rem] bg-neutral-900 border border-neutral-800 text-left">
+              <Projector className="text-orange-400 mb-5 md:mb-6 w-10 h-10 md:w-12 md:h-12" />
               <h3 className="text-xl md:text-2xl font-bold mb-3 md:mb-4">Pantallas LED</h3>
-              <p className="text-sm md:text-base text-neutral-400 leading-relaxed">Pantallas gigantes de alta resolución para proyección de visuales, videos y transmisiones en vivo con máxima claridad.</p>
+              <p className="text-sm md:text-base text-neutral-400 leading-relaxed">Pantallas gigantes de alta resolución para proyección de visuales, videos y transmisiones en vivo.</p>
             </div>
           </div>
         </div>
@@ -272,7 +271,7 @@ export default function App() {
           <div className="bg-white p-6 md:p-12 rounded-3xl md:rounded-[3rem] shadow-2xl border border-orange-100">
             <div className="flex flex-col sm:flex-row gap-3 md:gap-4 mb-2">
               <input type="text" value={iaPrompt} onChange={(e) => setIaPrompt(e.target.value)} placeholder="Ej: Mi graduación con sonido JBL..." className="flex-1 px-6 md:px-8 py-4 md:py-5 rounded-full bg-neutral-50 border focus:border-orange-500 text-base md:text-lg outline-none" />
-              <button onClick={generarIdeaConIA} disabled={isLoading || !iaPrompt} className="px-8 md:px-10 py-4 md:py-5 bg-neutral-900 text-white font-bold rounded-full hover:bg-orange-500 transition-all sm:min-w-[200px] md:min-w-[220px]">
+              <button onClick={generarIdeaConIA} disabled={isLoading || !iaPrompt} className="px-8 md:px-10 py-4 md:py-5 bg-neutral-900 text-white font-bold rounded-full hover:bg-orange-500 transition-all">
                 {isLoading ? <Loader2 className="animate-spin mx-auto" size={24} /> : "Generar Idea"}
               </button>
             </div>
@@ -281,7 +280,7 @@ export default function App() {
                 <p className="text-neutral-800 text-base md:text-xl font-medium italic">"{iaResponse}"</p>
                 <div className="mt-6 md:mt-8 flex justify-end">
                   <a href={getWaLink(`Idea IA: ${iaPrompt}`)} target="_blank" rel="noopener noreferrer" className="px-6 py-3 md:px-8 md:py-3.5 bg-green-500 text-white rounded-full font-bold flex items-center gap-2 shadow-md text-sm md:text-base">
-                    <MessageCircle size={20} className="md:w-5 md:h-5" /> Cotizar esta idea
+                    <MessageCircle size={20} /> Cotizar esta idea
                   </a>
                 </div>
               </div>
@@ -294,7 +293,6 @@ export default function App() {
       <footer className="bg-neutral-950 py-10 md:py-16 text-center text-neutral-500 border-t border-neutral-800">
         <img src={miLogo} alt="EG Events" className="h-8 md:h-12 w-auto mx-auto grayscale opacity-30 mb-6 md:mb-8" />
         <p className="text-sm md:text-base">© {new Date().getFullYear()} EG Events. Potenciado por JBL.</p>
-        <p className="mt-1 md:mt-2 font-mono text-xs md:text-sm">"A sound for you ;)"</p>
       </footer>
     </div>
   );
