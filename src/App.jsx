@@ -1,12 +1,13 @@
 import React, { useState, useEffect } from 'react';
 import { 
-  PartyPopper, HeartHandshake, Zap, GlassWater, Users, 
-  CalendarCheck, MessageCircle, Sparkles, Loader2, 
-  ChevronRight, X, Speaker, Projector, ShieldCheck, Award, Lightbulb
+  Music, Mic, MonitorPlay, Lightbulb, PartyPopper, HeartHandshake, 
+  GlassWater, Users, CalendarCheck, MessageCircle, Sparkles, 
+  Loader2, ChevronRight, X, Speaker, Projector, ShieldCheck, Award, Zap, School
 } from 'lucide-react';
 import './index.css';
 import miLogo from './logo.png';
 
+// --- BASE DE DATOS DE SERVICIOS (ACTUALIZADA CON GRADUACIONES) ---
 const serviciosData = [
   {
     id: '15anos',
@@ -14,7 +15,7 @@ const serviciosData = [
     icon: <PartyPopper size={32} />,
     image: 'https://images.unsplash.com/photo-1566737236500-c8ac43014a67?auto=format&fit=crop&q=80',
     shortDesc: 'La noche mágica que siempre soñó.',
-    fullDesc: 'Diseñamos una atmósfera de fantasía. Desde iluminación robótica que sigue a la quinceañera en su entrada, hasta pantallas LED de alta definición para proyectar su video cronológico. Un sonido impecable para que la pista de baile sea el epicentro de la juventud.',
+    fullDesc: 'Diseñamos una atmósfera de fantasía. Desde iluminación robótica que sigue a la quinceañera, hasta pantallas LED. Todo respaldado por la potencia y claridad de nuestros sistemas de sonido JBL.',
   },
   {
     id: 'bodas',
@@ -22,183 +23,183 @@ const serviciosData = [
     icon: <HeartHandshake size={32} />,
     image: 'https://images.unsplash.com/photo-1519225421980-715cb0215aed?auto=format&fit=crop&q=80',
     shortDesc: 'El soundtrack perfecto para tu "Sí, acepto".',
-    fullDesc: 'Musicalización elegante para la ceremonia y potencia desbordante para la celebración. Ofrecemos micrófonos inalámbricos para los discursos, iluminación arquitectónica para el salón, y una mezcla de DJ que mantendrá a todas las generaciones bailando.',
+    fullDesc: 'Musicalización elegante para la ceremonia y fiesta explosiva para la hora loca. Utilizamos tecnología JBL para garantizar que cada palabra de los votos y cada nota del vals se escuchen con una fidelidad asombrosa.',
+  },
+  {
+    id: 'graduaciones',
+    title: 'Graduaciones',
+    icon: <School size={32} />,
+    image: 'https://images.unsplash.com/photo-1541339906902-d014573ff2f0?auto=format&fit=crop&q=80',
+    shortDesc: 'El cierre de un ciclo, el inicio de una leyenda.',
+    fullDesc: 'Producimos actos académicos y fiestas de promoción con un estándar de excelencia. Desde el audio nítido para los discursos hasta la máxima potencia JBL para el baile final. Estructuras imponentes para una despedida inolvidable.',
+  },
+  {
+    id: 'divorcios',
+    title: 'Fiestas de Divorcio',
+    icon: <Zap size={32} />,
+    image: 'https://images.unsplash.com/photo-1566417713940-fe7c737a9ef2?auto=format&fit=crop&q=80',
+    shortDesc: '¡Celebra tu nueva libertad por todo lo alto!',
+    fullDesc: 'Un cierre de ciclo épico merece una fiesta legendaria. Luces de neón, láseres dinámicos y el sonido más vibrante de nuestras cabinas JBL para festejar tu nueva etapa junto a tus mejores amigos.',
+  },
+  {
+    id: 'bautizos',
+    title: 'Bautizos y Comuniones',
+    icon: <GlassWater size={32} />,
+    image: 'https://images.unsplash.com/photo-1438232992991-995b7058bbb3?auto=format&fit=crop&q=80',
+    shortDesc: 'Celebraciones íntimas, familiares y elegantes.',
+    fullDesc: 'Ambiente musical sutil y sofisticado. Microfonía nítida para los brindis familiares, apoyados con sonido profesional JBL de alta fidelidad y una iluminación cálida que realza la paz de la ceremonia.',
   },
   {
     id: 'corporativos',
     title: 'Eventos Corporativos',
-    icon: <Projector size={32} />,
+    icon: <Users size={32} />,
     image: 'https://images.unsplash.com/photo-1505373877841-8d25f7d46678?auto=format&fit=crop&q=80',
-    shortDesc: 'Proyectando la mejor imagen de su empresa.',
-    fullDesc: 'Soluciones audiovisuales integrales para conferencias, lanzamientos de marca y fiestas de fin de año. Pantallas, sonido nítido para los ponentes y soporte técnico en tiempo real para que su evento corporativo fluya sin contratiempos.',
-  },
-  {
-    id: 'infantiles',
-    title: 'Fiestas Infantiles',
-    icon: <Sparkles size={32} />,
-    image: 'https://images.unsplash.com/photo-1530103862676-de8892bf96f5?auto=format&fit=crop&q=80',
-    shortDesc: 'Diversión y energía al máximo nivel.',
-    fullDesc: 'Animación interactiva, sonido adaptado para los más pequeños, máquina de burbujas, luces de colores y un repertorio musical sano y divertido que hará que los niños no paren de saltar.',
-  },
-  {
-    id: 'graduaciones',
-    title: 'Fiestas de Graduación 2026',
-    icon: <Award size={32} />,
-    image: 'https://images.unsplash.com/photo-1523580494112-071fd6611667?auto=format&fit=crop&q=80',
-    shortDesc: 'El cierre de etapa más legendario de Maracay.',
-    fullDesc: 'Paquetes Prom Elite diseñados para promociones escolares y universitarias. Incluye estructuras Truss completas, pantallas LED 4K, show de luces inteligentes y animación crossover interactiva. Una producción de alto impacto para celebrar tu logro.',
+    shortDesc: 'Proyecta el éxito de tu marca o empresa.',
+    fullDesc: 'Soluciones audiovisuales de alto calibre para conferencias y lanzamientos. Sonido uniforme JBL que garantiza que tu mensaje corporativo llegue con total claridad a cada rincón del auditorio.',
   }
 ];
 
 export default function App() {
-  const [activeService, setActiveService] = useState(null);
   const [iaPrompt, setIaPrompt] = useState('');
   const [iaResponse, setIaResponse] = useState('');
-  const [isGenerating, setIsGenerating] = useState(false);
-  
-  const miNumero = "+584141490509"; 
+  const [isLoading, setIsLoading] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [servicioActivo, setServicioActivo] = useState(null);
 
-  const getWaLink = (textoPersonalizado) => {
-    const mensaje = encodeURIComponent(textoPersonalizado);
-    return `https://wa.me/${miNumero}?text=${mensaje}`;
+  const getWaLink = (contextoEvento = "") => {
+    const numero = "584141490509";
+    let mensaje = "¡Hola EG Events! Vi su página web y me gustaría solicitar una cotización. A sound for you ;)";
+    if (contextoEvento) {
+      mensaje = `¡Hola EG Events! Vi su página web y me gustaría cotizar el servicio para: *${contextoEvento}*. A sound for you ;)`;
+    }
+    return `https://wa.me/${numero}?text=${encodeURIComponent(mensaje)}`;
   };
 
-  const handleCotizarIA = () => {
-    if(!iaPrompt.trim()) return;
-    setIsGenerating(true);
+  useEffect(() => {
+    const handleScroll = () => setScrolled(window.scrollY > 50);
+    window.addEventListener('scroll', handleScroll);
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
+  const generarIdeaConIA = async () => {
+    if (!iaPrompt) return;
+    setIsLoading(true);
     setIaResponse('');
-    
-    setTimeout(() => {
-      setIaResponse(`¡Suena como un evento increíble! Para un evento de estilo "${iaPrompt}", te recomiendo una combinación de iluminación cálida al inicio, y un set de luces robóticas para cuando empiece la fiesta. ¡Dale al botón verde de abajo para que agendemos la fecha y te pase el presupuesto exacto al WhatsApp!`);
-      setIsGenerating(false);
-    }, 1500);
+    const API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
+
+    try {
+      const listResponse = await fetch(`https://generativelanguage.googleapis.com/v1beta/models?key=${API_KEY}`);
+      const listData = await listResponse.json();
+      let modeloCorrecto = "models/gemini-pro"; 
+      if (listData.models && listData.models.length > 0) {
+          const modeloDisponible = listData.models.find(m => 
+              m.supportedGenerationMethods && m.supportedGenerationMethods.includes("generateContent") &&
+              m.name.includes("gemini") && !m.name.includes("vision")
+          );
+          if (modeloDisponible) modeloCorrecto = modeloDisponible.name; 
+      }
+
+      const endpoint = `https://generativelanguage.googleapis.com/v1beta/${modeloCorrecto}:generateContent?key=${API_KEY}`;
+      const response = await fetch(endpoint, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          contents: [{
+            parts: [{
+              text: `Actúa como experto de 'EG Events' (16 años exp). Cliente quiere: "${iaPrompt}". Sugiere brevemente música, estructuras y recalca el uso de sonido JBL. Tono comercial.`
+            }]
+          }]
+        })
+      });
+      const data = await response.json();
+      if (data.candidates && data.candidates[0]) {
+        setIaResponse(data.candidates[0].content.parts[0].text);
+      } else {
+        setIaResponse("¡Suena espectacular! Escríbenos para diseñarlo con nuestra potencia JBL.");
+      }
+    } catch (error) {
+      setIaResponse("¡Suena espectacular! Escríbenos para diseñarlo con nuestra potencia JBL.");
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
-    <div className="min-h-screen bg-neutral-950 font-sans text-neutral-200 selection:bg-orange-500 selection:text-white">
+    <div className="min-h-screen bg-neutral-50 text-neutral-800 font-sans scroll-smooth">
       
-      {/* NAVBAR */}
-      <nav className="fixed w-full z-50 bg-neutral-950/80 backdrop-blur-xl border-b border-neutral-800 transition-all duration-300">
-        <div className="max-w-7xl mx-auto px-6 py-4 flex justify-between items-center">
-          <div className="flex items-center gap-3">
-            <img src={miLogo} alt="EG Events" className="h-10 w-auto" />
-            <span className="text-2xl font-black tracking-tight text-white">EG<span className="text-orange-500">EVENTS</span></span>
+      {/* NAVEGACIÓN */}
+      <nav className={`fixed w-full z-40 transition-all duration-500 ${scrolled ? 'bg-white/95 backdrop-blur-md shadow-md py-3' : 'bg-transparent py-6'}`}>
+        <div className="max-w-7xl mx-auto px-4 flex justify-between items-center">
+          <img src={miLogo} alt="EG Events" className="h-14 w-auto rounded-lg shadow-sm" />
+          <div className={`hidden md:flex space-x-8 font-bold text-sm tracking-wide ${scrolled ? 'text-neutral-800' : 'text-white'}`}>
+            <a href="#trayectoria" className="hover:text-orange-500 transition-colors">Nosotros</a>
+            <a href="#servicios" className="hover:text-orange-500 transition-colors">Servicios</a>
+            <a href="#equipos" className="hover:text-orange-500 transition-colors">Equipos</a>
+            <a href="#ia-ideas" className="hover:text-orange-500 transition-colors">Asistente IA</a>
           </div>
-          <div className="hidden md:flex items-center gap-8">
-            <a href="#servicios" className="text-sm font-semibold uppercase tracking-widest hover:text-orange-500 transition-colors">Servicios</a>
-            <a href="#ia-quote" className="text-sm font-semibold uppercase tracking-widest hover:text-orange-500 transition-colors">Cotización IA</a>
-            <a href={getWaLink("Hola Jesús, me gustaría consultar disponibilidad para un evento.")} target="_blank" rel="noopener noreferrer" className="px-6 py-2.5 bg-white text-black font-bold uppercase tracking-wider text-xs rounded-full hover:bg-orange-500 hover:text-white transition-all transform hover:scale-105">
-              WhatsApp Directo
-            </a>
-          </div>
+          <a href={getWaLink()} target="_blank" rel="noopener noreferrer" className="hidden md:inline-flex items-center gap-2 px-6 py-2.5 rounded-full text-white bg-gradient-to-r from-orange-500 to-yellow-500 font-bold shadow-lg transition-all">
+            <MessageCircle size={18} /> Contactar
+          </a>
         </div>
       </nav>
 
       {/* HERO SECTION */}
-      <section className="relative min-h-screen flex items-center pt-20 overflow-hidden">
+      <section className="relative pt-48 pb-40 overflow-hidden bg-neutral-950 text-white text-center">
         <div className="absolute inset-0 z-0">
-          <div className="absolute inset-0 bg-neutral-950/70 z-10"></div>
-          <img src="https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&q=80" alt="Background" className="w-full h-full object-cover object-center" />
+          <img src="https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&w=800&q=80" alt="Concert Event" className="w-full h-full object-cover opacity-20" />
+          <div className="absolute inset-0 bg-gradient-to-b from-neutral-950/80 via-neutral-950/90 to-neutral-950"></div>
         </div>
-        
-        <div className="relative z-20 max-w-7xl mx-auto px-6 w-full">
-          <div className="max-w-3xl">
-            <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-orange-500/10 border border-orange-500/20 text-orange-500 font-bold text-xs uppercase tracking-widest mb-6">
-              <Zap size={14} /> Producción Audiovisual Élite
-            </div>
-            <h1 className="text-5xl md:text-7xl lg:text-8xl font-black text-white leading-[1.1] tracking-tighter mb-6">
-              HACEMOS QUE <br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-orange-600">TU EVENTO</span> <br />
-              SUENE INCREÍBLE.
-            </h1>
-            <p className="text-lg md:text-xl text-neutral-400 mb-10 max-w-2xl leading-relaxed font-light">
-              Más que sonido e iluminación. Diseñamos atmósferas envolventes y experiencias acústicas impecables en Maracay y todo el estado Aragua.
+        <div className="relative z-10 max-w-7xl mx-auto px-4">
+          <div className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full bg-white/10 border border-white/20 text-orange-400 font-semibold text-sm mb-8 backdrop-blur-md">
+            <Award size={18} /> 16 Años de Excelencia con Sonido JBL
+          </div>
+          <h1 className="text-5xl md:text-8xl font-black mb-6 leading-tight tracking-tighter">Elevamos el nivel <br/> de tu celebración.</h1>
+          <p className="mt-6 text-2xl md:text-3xl text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-yellow-300 font-light italic">"A sound for you ;)"</p>
+        </div>
+      </section>
+
+      {/* NOSOTROS */}
+      <section id="trayectoria" className="py-24 bg-white">
+        <div className="max-w-7xl mx-auto px-4 grid grid-cols-1 md:grid-cols-2 gap-16 items-center">
+          <div>
+            <h2 className="text-4xl md:text-5xl font-black text-neutral-900 mb-6">No solo ponemos música, <span className="text-orange-500">creamos memorias.</span></h2>
+            <p className="text-lg text-neutral-600 leading-relaxed mb-6">
+              En <strong>EG Events</strong> somos especialistas en llevar la potencia de <strong>JBL Professional</strong> a tu evento. Con 16 años de trayectoria, garantizamos una experiencia sonora de alto impacto y una iluminación de vanguardia.
             </p>
-            <div className="flex flex-wrap gap-4">
-              <a href={getWaLink("Hola Jesús! Vengo de tu página web, quiero cotizar un evento.")} target="_blank" rel="noopener noreferrer" className="px-8 py-4 bg-orange-500 text-white font-bold uppercase tracking-widest text-sm rounded flex items-center gap-2 hover:bg-orange-600 transition-all hover:pr-6 group">
-                Cotizar mi Evento <ChevronRight size={18} className="group-hover:translate-x-1 transition-transform" />
-              </a>
+            <div className="grid grid-cols-2 gap-6 mt-8">
+              <div className="flex items-center gap-3">
+                <ShieldCheck className="text-orange-500" size={32} />
+                <span className="font-bold text-neutral-800">Calidad JBL</span>
+              </div>
+              <div className="flex items-center gap-3">
+                <Sparkles className="text-orange-500" size={32} />
+                <span className="font-bold text-neutral-800">Diseño Elite</span>
+              </div>
             </div>
           </div>
-        </div>
-      </section>
-
-      {/* POR QUÉ ELEGIRNOS */}
-      <section className="py-24 bg-neutral-900">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="grid md:grid-cols-3 gap-12">
-            <div className="flex flex-col gap-4">
-              <div className="w-14 h-14 rounded-2xl bg-neutral-800 flex items-center justify-center text-orange-500 mb-2">
-                <ShieldCheck size={28} />
-              </div>
-              <h3 className="text-xl font-bold text-white">Confiabilidad Absoluta</h3>
-              <p className="text-neutral-400 leading-relaxed">Equipos de respaldo, puntualidad estricta y un equipo técnico preparado para cualquier eventualidad. Tu tranquilidad es primero.</p>
-            </div>
-            <div className="flex flex-col gap-4">
-              <div className="w-14 h-14 rounded-2xl bg-neutral-800 flex items-center justify-center text-orange-500 mb-2">
-                <Speaker size={28} />
-              </div>
-              <h3 className="text-xl font-bold text-white">Equipos de Alta Gama</h3>
-              <p className="text-neutral-400 leading-relaxed">No escatimamos en calidad. Trabajamos con marcas líderes en la industria para garantizar que cada nota y cada luz sea perfecta.</p>
-            </div>
-            <div className="flex flex-col gap-4">
-              <div className="w-14 h-14 rounded-2xl bg-neutral-800 flex items-center justify-center text-orange-500 mb-2">
-                <Users size={28} />
-              </div>
-              <h3 className="text-xl font-bold text-white">Atención Personalizada</h3>
-              <p className="text-neutral-400 leading-relaxed">Entendemos que cada evento es único. Jesús y todo el equipo te asesorarán desde el día uno hasta que el último invitado se vaya.</p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* --- INSERCIÓN: CERTIFICACIÓN JBL --- */}
-      <section className="py-12 bg-neutral-900">
-        <div className="max-w-6xl mx-auto px-6">
-          <div className="bg-gradient-to-r from-neutral-950 to-neutral-900 border-l-4 border-orange-500 p-8 md:p-10 rounded-r-3xl flex flex-col md:flex-row items-center gap-8 shadow-2xl relative overflow-hidden">
-            <div className="absolute top-0 right-0 w-64 h-64 bg-orange-500/5 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3"></div>
-            <div className="bg-orange-500 p-4 rounded-full text-black flex-shrink-0 shadow-[0_0_30px_rgba(249,115,22,0.2)] z-10">
-              <Speaker size={40} />
-            </div>
-            <div className="text-center md:text-left z-10">
-              <h3 className="text-2xl font-black text-white uppercase tracking-wider mb-2 italic">
-                Estándar <span className="text-orange-500">JBL Professional</span>
-              </h3>
-              <p className="text-neutral-400 text-base md:text-lg leading-relaxed max-w-3xl font-light">
-                No solo es música, es una experiencia acústica inmersiva. Todos nuestros despliegues están potenciados por sistemas activos de alta fidelidad <strong>JBL Audio</strong>, garantizando presión sonora cristalina y bajos profundos para cualquier recinto en Maracay.
-              </p>
-            </div>
+          <div className="relative">
+            <div className="absolute inset-0 bg-orange-500 rounded-3xl translate-x-4 translate-y-4 opacity-20"></div>
+            <img src="https://images.unsplash.com/photo-1470225620780-dba8ba36b745?auto=format&fit=crop&w=800&q=80" alt="Equipos EG Events" className="relative rounded-3xl shadow-2xl object-cover h-[500px] w-full" />
           </div>
         </div>
       </section>
 
       {/* SERVICIOS */}
-      <section id="servicios" className="py-24 bg-neutral-950 relative">
-        <div className="max-w-7xl mx-auto px-6">
-          <div className="mb-16">
-            <h2 className="text-4xl md:text-5xl font-black text-white uppercase tracking-tight mb-4">Nuestros <span className="text-orange-500">Servicios</span></h2>
-            <div className="w-20 h-1 bg-orange-500"></div>
+      <section id="servicios" className="py-24 bg-neutral-100">
+        <div className="max-w-7xl mx-auto px-4">
+          <div className="text-center mb-16">
+            <h2 className="text-4xl md:text-5xl font-black text-neutral-900 mb-4">Experiencias a tu Medida</h2>
+            <p className="text-xl text-neutral-600">Alta producción para eventos de cualquier envergadura.</p>
           </div>
-
-          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             {serviciosData.map((servicio) => (
-              <div 
-                key={servicio.id}
-                onClick={() => setActiveService(servicio)}
-                className="group relative h-96 rounded-2xl overflow-hidden cursor-pointer"
-              >
-                <div className="absolute inset-0 z-10 bg-gradient-to-t from-neutral-950 via-neutral-950/60 to-transparent transition-opacity group-hover:opacity-80"></div>
-                <img 
-                  src={servicio.image} 
-                  alt={servicio.title} 
-                  className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
-                />
-                <div className="absolute inset-0 z-20 p-8 flex flex-col justify-end transform transition-transform duration-300">
-                  <div className="w-12 h-12 rounded-full bg-orange-500 text-white flex items-center justify-center mb-4 transform translate-y-4 opacity-0 group-hover:translate-y-0 group-hover:opacity-100 transition-all">
-                    {servicio.icon}
-                  </div>
+              <div key={servicio.id} onClick={() => setServicioActivo(servicio)} className="group relative rounded-[2rem] overflow-hidden shadow-lg h-[400px] cursor-pointer">
+                <img src={servicio.image} alt={servicio.title} className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
+                <div className="absolute inset-0 bg-gradient-to-t from-neutral-950 via-neutral-950/40 to-transparent"></div>
+                <div className="absolute bottom-0 left-0 w-full p-8">
+                  <div className="text-orange-400 mb-4">{servicio.icon}</div>
                   <h3 className="text-2xl font-bold text-white mb-2">{servicio.title}</h3>
-                  <p className="text-neutral-300 text-sm">{servicio.shortDesc}</p>
+                  <span className="inline-flex items-center text-sm font-bold text-orange-400">Ver detalles <ChevronRight size={16} /></span>
                 </div>
               </div>
             ))}
@@ -206,98 +207,78 @@ export default function App() {
         </div>
       </section>
 
-      {/* MODAL DE DETALLE DE SERVICIO */}
-      {activeService && (
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 sm:p-6 bg-neutral-950/90 backdrop-blur-md animate-in fade-in duration-200">
-          <div className="bg-neutral-900 rounded-3xl overflow-hidden max-w-4xl w-full flex flex-col md:flex-row shadow-2xl relative">
-            <button 
-              onClick={() => setActiveService(null)}
-              className="absolute top-4 right-4 z-50 w-10 h-10 bg-black/50 hover:bg-orange-500 text-white rounded-full flex items-center justify-center backdrop-blur-md transition-colors"
-            >
-              <X size={20} />
-            </button>
-            
-            <div className="md:w-2/5 h-64 md:h-auto relative">
-              <img src={activeService.image} alt={activeService.title} className="absolute inset-0 w-full h-full object-cover" />
+      {/* MODAL SERVICIOS */}
+      {servicioActivo && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4">
+          <div className="absolute inset-0 bg-neutral-950/80 backdrop-blur-sm" onClick={() => setServicioActivo(null)}></div>
+          <div className="relative bg-white rounded-[2rem] w-full max-w-5xl shadow-2xl overflow-hidden flex flex-col md:row max-h-[90vh]">
+            <div className="w-full md:w-1/2 h-64 md:h-auto">
+              <img src={servicioActivo.image} alt={servicioActivo.title} className="w-full h-full object-cover" />
             </div>
-            
-            <div className="md:w-3/5 p-8 md:p-12 flex flex-col justify-center">
-              <div className="text-orange-500 mb-4">{activeService.icon}</div>
-              <h3 className="text-3xl font-black text-white mb-4">{activeService.title}</h3>
-              <p className="text-neutral-400 leading-relaxed mb-8 text-lg">
-                {activeService.fullDesc}
-              </p>
-              <a 
-                href={getWaLink(`Hola Jesús, me gustaría recibir una cotización detallada para un evento de tipo: ${activeService.title}`)} 
-                target="_blank" 
-                rel="noopener noreferrer" 
-                className="inline-flex justify-center items-center gap-2 px-8 py-4 bg-white text-black font-bold uppercase tracking-widest text-sm rounded hover:bg-orange-500 hover:text-white transition-colors"
-              >
-                Solicitar Cotización <ChevronRight size={18} />
+            <div className="w-full md:w-1/2 p-8 md:p-12 overflow-y-auto">
+              <h3 className="text-4xl font-black text-neutral-900 mb-4">{servicioActivo.title}</h3>
+              <p className="text-lg text-neutral-600 mb-8">{servicioActivo.fullDesc}</p>
+              <a href={getWaLink(servicioActivo.title)} target="_blank" rel="noopener noreferrer" className="w-full inline-flex justify-center items-center gap-2 px-8 py-4 rounded-full text-white bg-neutral-900 hover:bg-orange-500 font-bold text-lg transition-all">
+                <MessageCircle size={22} /> Cotizar vía WhatsApp
               </a>
             </div>
           </div>
         </div>
       )}
 
-      {/* SECCIÓN IA - ASISTENTE DE COTIZACIÓN RÁPIDA */}
-      <section id="ia-quote" className="py-32 bg-white relative overflow-hidden">
-        <div className="absolute top-0 right-0 w-[800px] h-[800px] bg-orange-50 rounded-full blur-3xl -translate-y-1/2 translate-x-1/3 z-0"></div>
-        <div className="max-w-4xl mx-auto px-6 relative z-10 text-center">
-          <div className="w-16 h-16 bg-orange-100 text-orange-500 rounded-2xl flex items-center justify-center mx-auto mb-6">
-            <Lightbulb size={32} />
-          </div>
-          <h2 className="text-4xl md:text-5xl font-black text-neutral-950 tracking-tight mb-6">
-            ¿No sabes por dónde empezar? <br />
-            <span className="text-orange-500">Nuestra IA te asesora.</span>
-          </h2>
-          <p className="text-neutral-600 text-lg mb-12">
-            Cuéntanos brevemente cómo te imaginas tu evento (ej. "Una boda para 100 personas de noche con música de los 80s") y nuestro asistente te dará una recomendación instantánea del montaje ideal.
-          </p>
-
-          <div className="bg-white rounded-3xl shadow-[0_20px_60px_rgba(0,0,0,0.08)] p-2 md:p-4 border border-neutral-100">
-            <div className="flex flex-col md:flex-row gap-4">
-              <input 
-                type="text" 
-                value={iaPrompt}
-                onChange={(e) => setIaPrompt(e.target.value)}
-                placeholder="Ej: Una fiesta de 15 años temática neón en salón cerrado..."
-                className="flex-1 bg-neutral-50 border border-neutral-200 rounded-2xl px-6 py-4 text-neutral-800 placeholder:text-neutral-400 focus:outline-none focus:ring-2 focus:ring-orange-500/50 focus:border-orange-500 transition-all text-lg"
-              />
-              <button 
-                onClick={handleCotizarIA}
-                disabled={isGenerating || !iaPrompt.trim()}
-                className="px-8 py-4 bg-neutral-950 text-white font-bold rounded-2xl hover:bg-orange-500 transition-colors disabled:opacity-50 flex items-center justify-center gap-2 min-w-[200px]"
-              >
-                {isGenerating ? (
-                  <><Loader2 size={20} className="animate-spin" /> Analizando...</>
-                ) : (
-                  <><Sparkles size={20} /> Generar Idea</>
-                )}
-              </button>
+      {/* EQUIPOS TÉCNICOS */}
+      <section id="equipos" className="py-24 bg-neutral-950 text-white">
+        <div className="max-w-7xl mx-auto px-4 text-center">
+          <h2 className="text-4xl md:text-5xl font-black mb-16 text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-yellow-400">Arsenal Tecnológico</h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <div className="p-10 rounded-[2rem] bg-neutral-900 border border-neutral-800 text-left group">
+              <Speaker className="text-orange-400 mb-6 group-hover:scale-110 transition-transform" size={48} />
+              <h3 className="text-2xl font-bold mb-4">Sonido JBL Professional</h3>
+              <p className="text-neutral-400 leading-relaxed">Sistemas Line Array y bajos de alta potencia JBL para una acústica perfecta, nítida y envolvente en cualquier espacio.</p>
             </div>
-            
-            <div className={`transition-all duration-500 overflow-hidden ${iaResponse ? 'max-h-[600px] opacity-100 mt-8' : 'max-h-0 opacity-0'}`}>
-              <div className="p-8 md:p-10 bg-gradient-to-br from-orange-50 to-yellow-50 rounded-3xl text-left border border-orange-200 shadow-inner">
-                <p className="text-neutral-800 text-xl font-medium italic leading-relaxed">"{iaResponse}"</p>
-                <div className="mt-8 pt-6 border-t border-orange-200 flex justify-end">
-                  <a href={getWaLink(`Producción sugerida por la IA para: ${iaPrompt}`)} target="_blank" rel="noopener noreferrer" className="px-8 py-3.5 bg-green-500 hover:bg-green-600 text-white rounded-full font-bold flex items-center gap-2 shadow-md hover:scale-105 transition-transform">
-                    <MessageCircle size={20} /> Cotizar esta idea al WhatsApp
-                  </a>
-                </div>
-              </div>
+            <div className="p-10 rounded-[2rem] bg-neutral-900 border border-neutral-800 text-left group">
+              <Lightbulb className="text-orange-400 mb-6 group-hover:scale-110 transition-transform" size={48} />
+              <h3 className="text-2xl font-bold mb-4">Iluminación Inteligente</h3>
+              <p className="text-neutral-400 leading-relaxed">Cabezas móviles robóticas y efectos láser para crear ambientes inmersivos que se sincronizan con el ritmo de la fiesta.</p>
+            </div>
+            <div className="p-10 rounded-[2rem] bg-neutral-900 border border-neutral-800 text-left group">
+              <Projector className="text-orange-400 mb-6 group-hover:scale-110 transition-transform" size={48} />
+              <h3 className="text-2xl font-bold mb-4">Pantallas LED</h3>
+              <p className="text-neutral-400 leading-relaxed">Pantallas gigantes de alta resolución para proyección de visuales, videos y transmisiones en vivo con máxima claridad.</p>
             </div>
           </div>
         </div>
       </section>
 
-      <footer className="bg-neutral-950 py-16 text-center text-neutral-500 border-t border-neutral-800">
-        <img src={miLogo} alt="EG Events" className="h-12 w-auto mx-auto grayscale opacity-30 mb-8 hover:grayscale-0 hover:opacity-100 transition-all duration-500" />
-        <p className="font-semibold tracking-widest uppercase text-sm mb-2 text-neutral-400">EG Events Production</p>
-        <p className="text-xs mb-8">Maracay, Aragua - Venezuela.</p>
-        <div className="flex justify-center gap-6">
-          {/* Aquí puedes agregar links a Instagram, Facebook, etc. */}
+      {/* IA INTERACTIVA */}
+      <section id="ia-ideas" className="py-32 bg-orange-50">
+        <div className="max-w-4xl mx-auto px-4 text-center">
+          <h2 className="text-4xl md:text-5xl font-black text-neutral-900 mb-6">Asistente Creativo IA</h2>
+          <p className="text-xl text-neutral-600 mb-12">Diseña tu evento ideal con nuestra Inteligencia Artificial.</p>
+          <div className="bg-white p-8 md:p-12 rounded-[3rem] shadow-2xl border border-orange-100">
+            <div className="flex flex-col md:flex-row gap-4 mb-2">
+              <input type="text" value={iaPrompt} onChange={(e) => setIaPrompt(e.target.value)} placeholder="Ej: Mi graduación con temática de gala..." className="flex-1 px-8 py-5 rounded-full bg-neutral-50 border focus:border-orange-500 text-lg outline-none" />
+              <button onClick={generarIdeaConIA} disabled={isLoading || !iaPrompt} className="px-10 py-5 bg-neutral-900 text-white font-bold rounded-full hover:bg-orange-500 transition-all min-w-[220px]">
+                {isLoading ? <Loader2 className="animate-spin mx-auto" size={24} /> : "Generar Idea"}
+              </button>
+            </div>
+            {iaResponse && (
+              <div className="mt-8 p-8 bg-gradient-to-br from-orange-50 to-yellow-50 rounded-3xl text-left border border-orange-200">
+                <p className="text-neutral-800 text-xl font-medium italic">"{iaResponse}"</p>
+                <div className="mt-8 flex justify-end">
+                  <a href={getWaLink(`Idea IA: ${iaPrompt}`)} target="_blank" rel="noopener noreferrer" className="px-8 py-3.5 bg-green-500 text-white rounded-full font-bold flex items-center gap-2 shadow-md">
+                    <MessageCircle size={20} /> Cotizar esta idea JBL
+                  </a>
+                </div>
+              </div>
+            )}
+          </div>
         </div>
+      </section>
+
+      <footer className="bg-neutral-950 py-16 text-center text-neutral-500 border-t border-neutral-800">
+        <img src={miLogo} alt="EG Events" className="h-12 w-auto mx-auto grayscale opacity-30 mb-8" />
+        <p>© {new Date().getFullYear()} EG Events. Potenciado por JBL. "A sound for you ;)"</p>
       </footer>
     </div>
   );
