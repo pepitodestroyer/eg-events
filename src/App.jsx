@@ -29,7 +29,6 @@ const serviciosData = [
     id: 'graduaciones',
     title: 'Graduaciones',
     icon: <School size={32} />,
-    // NUEVA IMAGEN VERIFICADA PARA GRADUACIONES
     image: 'https://images.unsplash.com/photo-1523050853023-8c2d27443ef8?auto=format&fit=crop&w=800&q=80',
     shortDesc: 'El cierre de un ciclo, el inicio de una leyenda.',
     fullDesc: 'Producimos actos académicos y fiestas de promoción con un estándar de excelencia. Desde el audio nítido para los discursos hasta la máxima potencia JBL para el baile final. Estructuras imponentes para una despedida inolvidable.',
@@ -88,6 +87,11 @@ export default function App() {
     setIaResponse('');
     const API_KEY = import.meta.env.VITE_GEMINI_API_KEY;
 
+    if (!API_KEY || API_KEY === "undefined" || API_KEY === "") {
+      setIaResponse("⚠️ Error interno: Clave de IA no detectada.");
+      setIsLoading(false); return;
+    }
+
     try {
       const listResponse = await fetch(`https://generativelanguage.googleapis.com/v1beta/models?key=${API_KEY}`);
       const listData = await listResponse.json();
@@ -95,7 +99,7 @@ export default function App() {
       if (listData.models && listData.models.length > 0) {
           const modeloDisponible = listData.models.find(m => 
               m.supportedGenerationMethods && m.supportedGenerationMethods.includes("generateContent") &&
-              m.name.includes("gemini") && !m.name.includes("vision")
+              m.name.includes("gemini") && !m.name.includes("vision") && !m.name.includes("embedding")
           );
           if (modeloDisponible) modeloCorrecto = modeloDisponible.name; 
       }
