@@ -125,35 +125,43 @@ export default function App() {
   return (
     <div className="min-h-screen bg-neutral-50 text-neutral-800 font-sans scroll-smooth">
       
-      {/* NAVEGACIÓN - Ajustada para que no choque en teléfonos */}
+      {/* NAVEGACIÓN */}
       <nav className={`fixed w-full z-50 transition-all duration-500 ${scrolled ? 'bg-white/95 backdrop-blur-md shadow-md py-2 md:py-3' : 'bg-transparent py-4'}`}>
         <div className="max-w-7xl mx-auto px-4 flex justify-between items-center gap-2">
-          <img src={miLogo} alt="EG Events" className="h-8 md:h-14 w-auto object-contain" />
+          <img src={miLogo} alt="EG Events" className="h-10 md:h-14 w-auto object-contain" />
           <div className={`hidden md:flex space-x-8 font-bold text-sm tracking-wide ${scrolled ? 'text-neutral-800' : 'text-white'}`}>
             <a href="#trayectoria" className="hover:text-orange-500">Nosotros</a>
             <a href="#servicios" className="hover:text-orange-500">Servicios</a>
             <a href="#equipos" className="hover:text-orange-500">Equipos</a>
             <a href="#ia-ideas" className="hover:text-orange-500">Asistente IA</a>
           </div>
-          <a href={getWaLink()} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 md:gap-2 px-4 py-2 md:px-5 md:py-2.5 rounded-full text-white bg-gradient-to-r from-orange-500 to-yellow-500 font-bold shadow-lg text-xs md:text-sm whitespace-nowrap">
+          <a href={getWaLink()} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 md:gap-2 px-5 py-2.5 md:px-6 md:py-2.5 rounded-full text-white bg-gradient-to-r from-orange-500 to-yellow-500 font-bold shadow-lg text-sm whitespace-nowrap">
             <MessageCircle size={16} /> Contactar
           </a>
         </div>
       </nav>
 
-      {/* HERO SECTION - Puro gradiente y luces, CERO imágenes */}
-      <section className="relative pt-36 pb-24 md:pt-48 md:pb-40 overflow-hidden bg-neutral-950 text-white text-center">
+      {/* --- HERO SECTION: REFINADA Y ELEGANTE PARA MÓVILES --- */}
+      <section className="relative pt-40 pb-20 md:pt-48 md:pb-40 overflow-hidden bg-neutral-950 text-white text-center flex flex-col justify-center min-h-[70vh] md:min-h-0">
         <div className="absolute inset-0 z-0">
-          <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-neutral-800 via-neutral-950 to-neutral-950"></div>
-          <div className="absolute top-0 left-1/4 w-[300px] h-[300px] md:w-[500px] md:h-[500px] bg-orange-600/20 rounded-full blur-[100px] md:blur-[120px] animate-pulse"></div>
-          <div className="absolute bottom-0 right-1/4 w-[400px] h-[400px] md:w-[600px] md:h-[600px] bg-yellow-600/10 rounded-full blur-[120px] md:blur-[150px] animate-pulse" style={{ animationDelay: '2s' }}></div>
+          <div className="absolute inset-0 bg-gradient-to-b from-neutral-900 via-neutral-950 to-neutral-950"></div>
+          {/* Luces ajustadas: Pequeñas en movil, gigantes en PC */}
+          <div className="absolute top-10 left-10 w-48 h-48 md:w-[500px] md:h-[500px] bg-orange-600/30 rounded-full blur-[80px] md:blur-[120px] animate-pulse"></div>
+          <div className="absolute bottom-10 right-10 w-48 h-48 md:w-[600px] md:h-[600px] bg-yellow-600/20 rounded-full blur-[80px] md:blur-[150px] animate-pulse" style={{ animationDelay: '2s' }}></div>
         </div>
-        <div className="relative z-10 max-w-7xl mx-auto px-4">
-          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-white/10 border border-white/20 text-orange-400 font-semibold text-xs md:text-sm mb-6 md:mb-8 backdrop-blur-md">
-            <Award size={16} /> 16 Años de Excelencia con JBL Professional
+        
+        {/* Contenedor del texto: Alineado al centro, respetando márgenes */}
+        <div className="relative z-10 max-w-7xl mx-auto px-4 md:px-6 w-full mt-10 md:mt-0">
+          <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-neutral-800/50 border border-neutral-700 text-orange-400 font-semibold text-xs md:text-sm mb-8 backdrop-blur-md shadow-xl">
+            <Award size={16} /> 16 Años de Excelencia con JBL
           </div>
-          <h1 className="text-4xl sm:text-5xl md:text-8xl font-black mb-4 md:mb-6 leading-tight tracking-tighter">Elevamos el nivel <br className="hidden md:block"/> de tu celebración.</h1>
-          <p className="mt-4 md:mt-6 text-xl sm:text-2xl md:text-3xl text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-yellow-300 font-light italic">"A sound for you ;)"</p>
+          {/* Título: Tamaño controlado y líneas separadas elegantemente */}
+          <h1 className="text-5xl sm:text-6xl md:text-8xl font-black mb-6 leading-[1.1] tracking-tight drop-shadow-2xl">
+            Elevamos el nivel <br /> de tu celebración.
+          </h1>
+          <p className="mt-6 text-xl sm:text-2xl md:text-3xl text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-yellow-300 font-light italic drop-shadow-lg">
+            "A sound for you ;)"
+          </p>
         </div>
       </section>
 
@@ -266,8 +274,8 @@ export default function App() {
 
       <footer className="bg-neutral-950 py-10 text-center text-neutral-500 border-t border-neutral-800">
         <img src={miLogo} alt="EG Events" className="h-8 mx-auto grayscale opacity-30 mb-6" />
-        {/* LA TINTA RASTREADORA */}
-        <p className="text-sm">© {new Date().getFullYear()} EG Events. Potenciado por JBL Professional. (v2.0)</p>
+        {/* LA TINTA RASTREADORA ACTUALIZADA */}
+        <p className="text-sm">© {new Date().getFullYear()} EG Events. Potenciado por JBL Professional. (v3.0)</p>
       </footer>
     </div>
   );
