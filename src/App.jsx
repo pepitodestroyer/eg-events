@@ -29,7 +29,7 @@ const serviciosData = [
     id: 'graduaciones',
     title: 'Graduaciones',
     icon: <School size={32} />,
-    image: 'https://images.unsplash.com/photo-1523050853023-8c2d27443ef8?auto=format&fit=crop&w=800&q=80',
+    image: 'https://images.pexels.com/photos/267885/pexels-photo-267885.jpeg?auto=compress&cs=tinysrgb&w=800',
     shortDesc: 'El cierre de un ciclo, el inicio de una leyenda.',
     fullDesc: 'Producimos actos académicos y fiestas de promoción con un estándar de excelencia. Desde el audio nítido para los discursos hasta la máxima potencia JBL para el baile final. Estructuras imponentes para una despedida inolvidable.',
   },
