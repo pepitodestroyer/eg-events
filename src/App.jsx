@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from 'react';
 import { 
-  Music, Mic, MonitorPlay, Lightbulb, PartyPopper, HeartHandshake, 
-  GlassWater, Users, CalendarCheck, MessageCircle, Sparkles, 
-  Loader2, ChevronRight, X, Speaker, Projector, ShieldCheck, Award, Zap, School
+  PartyPopper, HeartHandshake, GlassWater, Users, 
+  MessageCircle, Sparkles, Loader2, ChevronRight, 
+  X, Speaker, Projector, ShieldCheck, Award, Zap, School
 } from 'lucide-react';
 import './index.css';
 import miLogo from './logo.png';
@@ -125,37 +125,32 @@ export default function App() {
   return (
     <div className="min-h-screen bg-neutral-50 text-neutral-800 font-sans scroll-smooth">
       
-      {/* NAVEGACIÓN */}
       <nav className={`fixed w-full z-50 transition-all duration-500 ${scrolled ? 'bg-white/95 backdrop-blur-md shadow-md py-2 md:py-3' : 'bg-transparent py-4'}`}>
         <div className="max-w-7xl mx-auto px-4 flex justify-between items-center gap-2">
           <img src={miLogo} alt="EG Events" className="h-10 md:h-14 w-auto object-contain" />
           <div className={`hidden md:flex space-x-8 font-bold text-sm tracking-wide ${scrolled ? 'text-neutral-800' : 'text-white'}`}>
-            <a href="#trayectoria" className="hover:text-orange-500">Nosotros</a>
-            <a href="#servicios" className="hover:text-orange-500">Servicios</a>
-            <a href="#equipos" className="hover:text-orange-500">Equipos</a>
-            <a href="#ia-ideas" className="hover:text-orange-500">Asistente IA</a>
+            <a href="#trayectoria" className="hover:text-orange-500 transition-colors">Nosotros</a>
+            <a href="#servicios" className="hover:text-orange-500 transition-colors">Servicios</a>
+            <a href="#equipos" className="hover:text-orange-500 transition-colors">Equipos</a>
+            <a href="#ia-ideas" className="hover:text-orange-500 transition-colors">Asistente IA</a>
           </div>
-          <a href={getWaLink()} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 md:gap-2 px-5 py-2.5 md:px-6 md:py-2.5 rounded-full text-white bg-gradient-to-r from-orange-500 to-yellow-500 font-bold shadow-lg text-sm whitespace-nowrap">
+          <a href={getWaLink()} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 md:gap-2 px-5 py-2.5 md:px-6 md:py-2.5 rounded-full text-white bg-gradient-to-r from-orange-500 to-yellow-500 font-bold shadow-lg text-sm whitespace-nowrap hover:scale-105 transition-transform">
             <MessageCircle size={16} /> Contactar
           </a>
         </div>
       </nav>
 
-      {/* --- HERO SECTION: REFINADA Y ELEGANTE PARA MÓVILES --- */}
       <section className="relative pt-40 pb-20 md:pt-48 md:pb-40 overflow-hidden bg-neutral-950 text-white text-center flex flex-col justify-center min-h-[70vh] md:min-h-0">
         <div className="absolute inset-0 z-0">
           <div className="absolute inset-0 bg-gradient-to-b from-neutral-900 via-neutral-950 to-neutral-950"></div>
-          {/* Luces ajustadas: Pequeñas en movil, gigantes en PC */}
           <div className="absolute top-10 left-10 w-48 h-48 md:w-[500px] md:h-[500px] bg-orange-600/30 rounded-full blur-[80px] md:blur-[120px] animate-pulse"></div>
           <div className="absolute bottom-10 right-10 w-48 h-48 md:w-[600px] md:h-[600px] bg-yellow-600/20 rounded-full blur-[80px] md:blur-[150px] animate-pulse" style={{ animationDelay: '2s' }}></div>
         </div>
         
-        {/* Contenedor del texto: Alineado al centro, respetando márgenes */}
         <div className="relative z-10 max-w-7xl mx-auto px-4 md:px-6 w-full mt-10 md:mt-0">
           <div className="inline-flex items-center gap-2 px-4 py-2 rounded-full bg-neutral-800/50 border border-neutral-700 text-orange-400 font-semibold text-xs md:text-sm mb-8 backdrop-blur-md shadow-xl">
             <Award size={16} /> 16 Años de Excelencia con JBL
           </div>
-          {/* Título: Tamaño controlado y líneas separadas elegantemente */}
           <h1 className="text-5xl sm:text-6xl md:text-8xl font-black mb-6 leading-[1.1] tracking-tight drop-shadow-2xl">
             Elevamos el nivel <br /> de tu celebración.
           </h1>
@@ -190,13 +185,13 @@ export default function App() {
           </div>
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-8">
             {serviciosData.map((servicio) => (
-              <div key={servicio.id} onClick={() => setServicioActivo(servicio)} className="group relative rounded-3xl overflow-hidden shadow-lg h-72 md:h-[400px] cursor-pointer">
+              <div key={servicio.id} onClick={() => setServicioActivo(servicio)} className="group relative rounded-3xl overflow-hidden shadow-lg h-72 md:h-[400px] cursor-pointer hover:shadow-2xl transition-shadow">
                 <img src={servicio.image} alt={servicio.title} className="absolute inset-0 w-full h-full object-cover transition-transform duration-700 group-hover:scale-110" />
                 <div className="absolute inset-0 bg-gradient-to-t from-neutral-950 via-neutral-950/40 to-transparent"></div>
                 <div className="absolute bottom-0 left-0 w-full p-6 md:p-8">
                   <div className="text-orange-400 mb-3">{servicio.icon}</div>
                   <h3 className="text-xl md:text-2xl font-bold text-white mb-2">{servicio.title}</h3>
-                  <span className="inline-flex items-center text-xs md:text-sm font-bold text-orange-400">Ver detalles <ChevronRight size={16} /></span>
+                  <span className="inline-flex items-center text-xs md:text-sm font-bold text-orange-400">Ver detalles <ChevronRight size={16} className="ml-1 group-hover:translate-x-1 transition-transform" /></span>
                 </div>
               </div>
             ))}
@@ -213,10 +208,10 @@ export default function App() {
               <img src={servicioActivo.image} alt={servicioActivo.title} className="absolute inset-0 w-full h-full object-cover" />
             </div>
             <div className="w-full md:w-1/2 p-6 md:p-12 overflow-y-auto bg-white flex flex-col justify-center">
-              <div className="inline-flex p-3 rounded-xl bg-orange-100 text-orange-600 mb-4 w-max">{servicioActivo.icon}</div>
+              <div className="inline-flex p-3 rounded-xl bg-orange-100 text-orange-600 mb-4 w-max shadow-sm">{servicioActivo.icon}</div>
               <h3 className="text-2xl md:text-4xl font-black text-neutral-900 mb-3">{servicioActivo.title}</h3>
               <p className="text-base md:text-lg text-neutral-600 leading-relaxed mb-6">{servicioActivo.fullDesc}</p>
-              <a href={getWaLink(servicioActivo.title)} target="_blank" rel="noopener noreferrer" className="w-full inline-flex justify-center items-center gap-2 px-6 py-4 rounded-full text-white bg-neutral-900 hover:bg-orange-500 font-bold shadow-lg transition-all">
+              <a href={getWaLink(servicioActivo.title)} target="_blank" rel="noopener noreferrer" className="w-full inline-flex justify-center items-center gap-2 px-6 py-4 rounded-full text-white bg-neutral-900 hover:bg-orange-500 font-bold shadow-lg transition-all hover:-translate-y-1">
                 <MessageCircle size={20} /> Cotizar vía WhatsApp
               </a>
             </div>
@@ -228,18 +223,18 @@ export default function App() {
         <div className="max-w-7xl mx-auto px-4 text-center">
           <h2 className="text-3xl md:text-5xl font-black mb-10 text-transparent bg-clip-text bg-gradient-to-r from-orange-400 to-yellow-400">Arsenal Tecnológico</h2>
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6 md:gap-8">
-            <div className="p-8 md:p-10 rounded-3xl bg-neutral-900 border border-neutral-800 text-left">
-              <Speaker className="text-orange-400 mb-5" size={40} />
+            <div className="p-8 md:p-10 rounded-3xl bg-neutral-900 border border-neutral-800 text-left hover:border-orange-500/50 transition-colors group">
+              <Speaker className="text-orange-400 mb-5 group-hover:scale-110 transition-transform" size={40} />
               <h3 className="text-xl md:text-2xl font-bold mb-3">Sonido JBL Professional</h3>
               <p className="text-sm md:text-base text-neutral-400 leading-relaxed">Sistemas Line Array y bajos de alta potencia JBL para una acústica perfecta y nítida.</p>
             </div>
-            <div className="p-8 md:p-10 rounded-3xl bg-neutral-900 border border-neutral-800 text-left">
-              <Lightbulb className="text-orange-400 mb-5" size={40} />
+            <div className="p-8 md:p-10 rounded-3xl bg-neutral-900 border border-neutral-800 text-left hover:border-orange-500/50 transition-colors group">
+              <Lightbulb className="text-orange-400 mb-5 group-hover:scale-110 transition-transform" size={40} />
               <h3 className="text-xl md:text-2xl font-bold mb-3">Iluminación Inteligente</h3>
               <p className="text-sm md:text-base text-neutral-400 leading-relaxed">Cabezas móviles robóticas y efectos láser sincronizados con la música.</p>
             </div>
-            <div className="p-8 md:p-10 rounded-3xl bg-neutral-900 border border-neutral-800 text-left">
-              <Projector className="text-orange-400 mb-5" size={40} />
+            <div className="p-8 md:p-10 rounded-3xl bg-neutral-900 border border-neutral-800 text-left hover:border-orange-500/50 transition-colors group">
+              <Projector className="text-orange-400 mb-5 group-hover:scale-110 transition-transform" size={40} />
               <h3 className="text-xl md:text-2xl font-bold mb-3">Visuales y Pantallas</h3>
               <p className="text-sm md:text-base text-neutral-400 leading-relaxed">Pantallas gigantes de alta resolución para una experiencia visual de impacto.</p>
             </div>
@@ -253,16 +248,16 @@ export default function App() {
           <p className="text-base md:text-xl text-neutral-600 mb-8">Diseña tu evento ideal con nuestra Inteligencia Artificial.</p>
           <div className="bg-white p-6 md:p-12 rounded-3xl shadow-2xl border border-orange-100">
             <div className="flex flex-col sm:flex-row gap-3">
-              <input type="text" value={iaPrompt} onChange={(e) => setIaPrompt(e.target.value)} placeholder="Ej: Mi graduación con sonido JBL..." className="flex-1 px-6 py-4 rounded-full bg-neutral-50 border outline-none focus:border-orange-500" />
-              <button onClick={generarIdeaConIA} disabled={isLoading || !iaPrompt} className="px-8 py-4 bg-neutral-900 text-white font-bold rounded-full hover:bg-orange-500 transition-all">
+              <input type="text" value={iaPrompt} onChange={(e) => setIaPrompt(e.target.value)} placeholder="Ej: Mi graduación con sonido JBL..." className="flex-1 px-6 py-4 rounded-full bg-neutral-50 border outline-none focus:border-orange-500 focus:ring-4 focus:ring-orange-500/10 transition-all" />
+              <button onClick={generarIdeaConIA} disabled={isLoading || !iaPrompt} className="px-8 py-4 bg-neutral-900 text-white font-bold rounded-full hover:bg-orange-500 transition-all shadow-md">
                 {isLoading ? <Loader2 className="animate-spin mx-auto" /> : "Generar Idea"}
               </button>
             </div>
             {iaResponse && (
-              <div className="mt-6 p-6 bg-orange-50 rounded-2xl text-left border border-orange-200">
-                <p className="text-neutral-800 italic">"{iaResponse}"</p>
-                <div className="mt-4 flex justify-end">
-                  <a href={getWaLink(`Idea IA: ${iaPrompt}`)} target="_blank" rel="noopener noreferrer" className="px-6 py-2 bg-green-500 text-white rounded-full font-bold flex items-center gap-2 shadow-md">
+              <div className="mt-6 p-6 md:p-8 bg-gradient-to-br from-orange-50 to-yellow-50 rounded-2xl text-left border border-orange-200 shadow-inner">
+                <p className="text-neutral-800 italic text-lg">"{iaResponse}"</p>
+                <div className="mt-6 flex justify-end">
+                  <a href={getWaLink(`Idea IA: ${iaPrompt}`)} target="_blank" rel="noopener noreferrer" className="px-6 py-3 bg-green-500 hover:bg-green-600 transition-colors text-white rounded-full font-bold flex items-center gap-2 shadow-md">
                     <MessageCircle size={18} /> Cotizar idea
                   </a>
                 </div>
@@ -273,9 +268,8 @@ export default function App() {
       </section>
 
       <footer className="bg-neutral-950 py-10 text-center text-neutral-500 border-t border-neutral-800">
-        <img src={miLogo} alt="EG Events" className="h-8 mx-auto grayscale opacity-30 mb-6" />
-        {/* LA TINTA RASTREADORA ACTUALIZADA */}
-        <p className="text-sm">© {new Date().getFullYear()} EG Events. Potenciado por JBL Professional. (v3.0)</p>
+        <img src={miLogo} alt="EG Events" className="h-8 mx-auto grayscale opacity-30 mb-6 hover:grayscale-0 hover:opacity-100 transition-all duration-500" />
+        <p className="text-sm">© {new Date().getFullYear()} EG Events. Potenciado por JBL Professional. (v4.0)</p>
       </footer>
     </div>
   );
