@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { 
   PartyPopper, HeartHandshake, GlassWater, Users, 
   MessageCircle, Sparkles, Loader2, ChevronRight, 
-  X, Speaker, Projector, ShieldCheck, Award, Zap, School
+  X, Speaker, Projector, ShieldCheck, Award, Zap, School, Lightbulb
 } from 'lucide-react';
 import './index.css';
 import miLogo from './logo.png';
@@ -269,7 +269,7 @@ export default function App() {
 
       <footer className="bg-neutral-950 py-10 text-center text-neutral-500 border-t border-neutral-800">
         <img src={miLogo} alt="EG Events" className="h-8 mx-auto grayscale opacity-30 mb-6 hover:grayscale-0 hover:opacity-100 transition-all duration-500" />
-        <p className="text-sm">© {new Date().getFullYear()} EG Events. Potenciado por JBL Professional. (v4.0)</p>
+        <p className="text-sm">© {new Date().getFullYear()} EG Events. Potenciado por JBL Professional. (v4.1)</p>
       </footer>
     </div>
   );
