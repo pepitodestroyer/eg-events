@@ -125,22 +125,23 @@ export default function App() {
   return (
     <div className="min-h-screen bg-neutral-50 text-neutral-800 font-sans scroll-smooth">
       
-      <nav className={`fixed w-full z-40 transition-all duration-500 ${scrolled ? 'bg-white/95 backdrop-blur-md shadow-md py-3' : 'bg-transparent py-4'}`}>
-        <div className="max-w-7xl mx-auto px-4 flex justify-between items-center">
-          <img src={miLogo} alt="EG Events" className="h-10 md:h-14 w-auto" />
+      {/* NAVEGACIÓN - Ajustada para que no choque en teléfonos */}
+      <nav className={`fixed w-full z-50 transition-all duration-500 ${scrolled ? 'bg-white/95 backdrop-blur-md shadow-md py-2 md:py-3' : 'bg-transparent py-4'}`}>
+        <div className="max-w-7xl mx-auto px-4 flex justify-between items-center gap-2">
+          <img src={miLogo} alt="EG Events" className="h-8 md:h-14 w-auto object-contain" />
           <div className={`hidden md:flex space-x-8 font-bold text-sm tracking-wide ${scrolled ? 'text-neutral-800' : 'text-white'}`}>
             <a href="#trayectoria" className="hover:text-orange-500">Nosotros</a>
             <a href="#servicios" className="hover:text-orange-500">Servicios</a>
             <a href="#equipos" className="hover:text-orange-500">Equipos</a>
             <a href="#ia-ideas" className="hover:text-orange-500">Asistente IA</a>
           </div>
-          <a href={getWaLink()} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-2 px-5 py-2 rounded-full text-white bg-gradient-to-r from-orange-500 to-yellow-500 font-bold shadow-lg text-sm">
-            <MessageCircle size={18} /> Contactar
+          <a href={getWaLink()} target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1 md:gap-2 px-4 py-2 md:px-5 md:py-2.5 rounded-full text-white bg-gradient-to-r from-orange-500 to-yellow-500 font-bold shadow-lg text-xs md:text-sm whitespace-nowrap">
+            <MessageCircle size={16} /> Contactar
           </a>
         </div>
       </nav>
 
-      {/* --- HERO SECTION: Restaurada a las luces, sin foto --- */}
+      {/* HERO SECTION - Puro gradiente y luces, CERO imágenes */}
       <section className="relative pt-36 pb-24 md:pt-48 md:pb-40 overflow-hidden bg-neutral-950 text-white text-center">
         <div className="absolute inset-0 z-0">
           <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-neutral-800 via-neutral-950 to-neutral-950"></div>
@@ -265,7 +266,8 @@ export default function App() {
 
       <footer className="bg-neutral-950 py-10 text-center text-neutral-500 border-t border-neutral-800">
         <img src={miLogo} alt="EG Events" className="h-8 mx-auto grayscale opacity-30 mb-6" />
-        <p className="text-sm">© {new Date().getFullYear()} EG Events. Potenciado por JBL Professional.</p>
+        {/* LA TINTA RASTREADORA */}
+        <p className="text-sm">© {new Date().getFullYear()} EG Events. Potenciado por JBL Professional. (v2.0)</p>
       </footer>
     </div>
   );
